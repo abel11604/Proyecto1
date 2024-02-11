@@ -133,6 +133,77 @@ DELIMITER ;
 
 
 
+/*
+	Este trigger establece automaticamente la hora y la fecha cuando se genera una transaccion
+*/
+
+DELIMITER $$
+CREATE TRIGGER establecer_fecha_hora_transaccion
+BEFORE INSERT ON transaccion
+FOR EACH ROW 
+BEGIN
+	
+	SET NEW.fecha_transaccion = CURDATE();
+    SET NEW.hora_transaccion = CURTIME();
+
+END$$
+
+DELIMITER ;
+
+
+
+
+/*
+	Procedimiento almacenado para realizar transferencias. Pide como parametros cuenta destino, monto, y cuenta origen
+    
+	Tambien esta la opcion de hacer este metodo de transferencia en la capa de aplicacion, pero optamos por hacerlo 
+		aqui para usar transacciones directamente en la bd y hacerlo un poco mas seguro
+*/
+
+DELIMITER $$
+CREATE PROCEDURE transferencia(IN id_cuenta_origen INT, monto INT, id_cuenta_destino INT)
+BEGIN 
+			# Declaramos las variables que seran los saldos de las cuentas
+		DECLARE saldo_origen INT; 
+        DECLARE saldo_destino INT;
+        
+        # Inicializamos esas variables al saldo que tengan las cuentas
+        SELECT saldo INTO saldo_origen FROM cuenta WHERE id_cuenta = id_cuenta_origen;
+        SELECT saldo INTO saldo_destino FROM cuenta WHERE id_cuenta = id_cuenta_destino;
+        
+			# Si el saldo de la cuenta origen, es mayor al monto, significa que si tiene dinero suficiente para la transferencia
+        IF saldo_origen >= monto THEN
+        
+				# Hacemos una transaccion para cumplir con el principio ACID
+			START TRANSACTION;
+            UPDATE cuenta SET saldo = saldo - monto WHERE id_cuenta = id_cuenta_origen;
+            UPDATE cuenta SET saldo = saldo + monto WHERE id_cuenta = id_cuenta_destino;
+				# El usuario tiene dinero, y no hubo errores, guardamos todos los cambios
+            COMMIT; 
+            
+		else
+				# El usuario no tiene suficiente dinero, revertimos todos los cambios
+			ROLLBACK;
+		END IF;
+        
+	
+
+END$$
+
+DELIMITER ;
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -167,7 +238,7 @@ CREATE TABLE Cuenta(
 	id_cuenta INT PRIMARY KEY NOT NULL,     -- numero de cuenta
 	fecha_apertura DATE NOT NULL,
 	saldo BIGINT,	
-    id_cliente INT,
+    id_cliente INT NOT NULL,
     FOREIGN KEY (id_cliente) REFERENCES Cliente(id)
 );
 
@@ -183,11 +254,11 @@ CREATE TABLE Cuenta(
 */
 CREATE TABLE Transaccion(
 	id_transaccion INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-	fecha_transaccion DATE NOT NULL,
-	hora_transaccion TIME NOT NULL, 
+	fecha_transaccion DATE NULL DEFAULT NULL,
+	hora_transaccion TIME NULL DEFAULT NULL, 
 	cantidad INT NOT NULL, 
     tipo_transaccion BOOLEAN DEFAULT TRUE, -- 0 NO ES CLIENTE, 1 ES CLIENTE. La funcion verHistorial() le da el formato para que se vea el tipo de transaccion
-    id_cuenta INT,
+    id_cuenta INT NOT NULL,
     FOREIGN KEY (id_cuenta) REFERENCES Cuenta(id_cuenta)
     
 );
