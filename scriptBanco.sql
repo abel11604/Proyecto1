@@ -1,24 +1,3 @@
-/*
--- DELIMITER $$
--- CREATE TRIGGER hola
--- AFTER INSERT ON TransaccionFolioCliente
--- FOR EACH ROW
--- BEGIN 
--- 	CALL evento(NEW.id_transaccion);
--- END$$
--- DELIMITER ;
--- DELIMITER $$ 
--- CREATE PROCEDURE evento(id INT)
--- BEGIN
--- 	SET @delete_event_sql = CONCAT('CREATE EVENT delete_event_', id, ' ON SCHEDULE AT CURRENT_TIMESTAMP + INTERVAL 1 MINUTE DO DELETE FROM TransaccionFolioCliente WHERE id_transaccion = ',id);
---     PREPARE delete_event_stmt FROM @delete_event_sql;
---     EXECUTE delete_event_stmt;
---     DEALLOCATE PREPARE delete_event_stmt;
-
--- END$$
--- DELIMITER ;
-*/
-
 
 /*
 	Trigger que verifica que tipo de transaccion es, cuando se realiza una transaccion, esta funcion se ejecuta y si 
@@ -26,7 +5,6 @@
     
     Si no, se ejecuta pero no hae nada
 */
-use banco;
 
 DELIMITER $$
 CREATE TRIGGER tipo_transaccion
@@ -101,6 +79,55 @@ DELIMITER ;
 
 
 
+/*
+	Este procedimiento es solo para mostrar la informacion de un cliente, sus transacciones
+    se pasa como parametro el id de la cuenta, el cual pertenece a un cliente.
+    Si el cliente tiene varias cuentas, aqui se introduce la cuenta que quiera ver.
+    
+    No utilizamos funcion aqui porque una funcion no puede retornar una tabla, puede retornar
+    valores en linea sin formato, pero no era muy presentable, asi que usamos un procedure
+    
+*/
+
+DELIMITER $$ 
+CREATE PROCEDURE verHistorial(IN id INT)
+BEGIN
+	SELECT
+		id_transaccion AS 'Id',
+        fecha_transaccion AS 'Fecha',
+        hora_transaccion AS 'Hora',
+        cantidad AS 'Monto',
+			CASE 
+				# para que no se muestren 0 y 1, le damos formato usando WHEN
+                # tambien se pudo cambiar el atributo de la columna tipo_transaccion a un ENUM
+                # que guarde valores de 'folio' y 'cliente' pero es mas facil operar con true y false
+				WHEN tipo_transaccion = 0 THEN 'Folio'
+                WHEN tipo_transaccion = 1 THEN 'Cliente'
+			END AS 'Tipo de Transacción'
+
+    FROM
+		transaccion
+	WHERE id = transaccion.id_cuenta;
+END$$
+DELIMITER ;
+
+
+
+
+
+/*
+	Trigger para calcular la edad cuando se inserte un cliente
+*/
+DELIMITER $$
+CREATE TRIGGER calcularEdad
+BEFORE INSERT ON cliente
+FOR EACH ROW 
+BEGIN
+    SET NEW.edad = TIMESTAMPDIFF(YEAR,NEW.fecha_nacimiento,CURDATE());
+    # metodo NEW y atributo edad, sql sabe cual editar, y le setea la edad
+END$$
+
+DELIMITER ;
 
 
 
@@ -126,7 +153,7 @@ CREATE TABLE Cliente(
 	colonia VARCHAR(255),
 	codigo_postal VARCHAR(255) NOT NULL,
 	fecha_nacimiento DATE NOT NULL,
-	edad INT
+	edad INT NULL DEFAULT 0
     
 );
 
@@ -159,7 +186,7 @@ CREATE TABLE Transaccion(
 	fecha_transaccion DATE NOT NULL,
 	hora_transaccion TIME NOT NULL, 
 	cantidad INT NOT NULL, 
-    tipo_transaccion BOOLEAN DEFAULT TRUE, -- 0 NO ES CLIENTE, 1 ES CLIENTE
+    tipo_transaccion BOOLEAN DEFAULT TRUE, -- 0 NO ES CLIENTE, 1 ES CLIENTE. La funcion verHistorial() le da el formato para que se vea el tipo de transaccion
     id_cuenta INT,
     FOREIGN KEY (id_cuenta) REFERENCES Cuenta(id_cuenta)
     
@@ -172,7 +199,7 @@ CREATE TABLE Transaccion(
 */
 CREATE TABLE TransaccionNormalCliente(
 id_transaccion INT, -- guardamos sin pk, solo referenciamos a la entidad padre
-FOREIGN KEY  (id_transaccion) REFERENCES   Transacciones(id_transaccion)
+FOREIGN KEY  (id_transaccion) REFERENCES   Transaccion(id_transaccion)
 );
 
 
@@ -192,9 +219,8 @@ id_transaccion INT,
 folio_transaccion VARCHAR(255),
 password_transaccion VARCHAR(8),
 estado boolean DEFAULT FALSE,
-tiempo TIMESTAMP,
+-- tiempo TIMESTAMP,
 FOREIGN KEY  (id_transaccion) REFERENCES Transaccion(id_transaccion )
 );
-
 
 
