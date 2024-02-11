@@ -152,7 +152,6 @@ DELIMITER ;
 
 
 
-
 /*
 	Procedimiento almacenado para realizar transferencias. Pide como parametros cuenta destino, monto, y cuenta origen
     
@@ -165,11 +164,9 @@ CREATE PROCEDURE transferencia(IN id_cuenta_origen INT, monto INT, id_cuenta_des
 BEGIN 
 			# Declaramos las variables que seran los saldos de las cuentas
 		DECLARE saldo_origen INT; 
-        DECLARE saldo_destino INT;
         
         # Inicializamos esas variables al saldo que tengan las cuentas
         SELECT saldo INTO saldo_origen FROM cuenta WHERE id_cuenta = id_cuenta_origen;
-        SELECT saldo INTO saldo_destino FROM cuenta WHERE id_cuenta = id_cuenta_destino;
         
 			# Si el saldo de la cuenta origen, es mayor al monto, significa que si tiene dinero suficiente para la transferencia
         IF saldo_origen >= monto THEN
