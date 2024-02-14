@@ -131,23 +131,6 @@ DELIMITER ;
 
 
 
-/*
-	Este trigger establece automaticamente la hora y la fecha cuando se genera una transaccion
-*/
-
-DELIMITER $$
-CREATE TRIGGER establecer_fecha_hora_transaccion
-BEFORE INSERT ON transaccion
-FOR EACH ROW 
-BEGIN
-	
-	SET NEW.fecha_transaccion = CURDATE();
-    SET NEW.hora_transaccion = CURTIME();
-
-END$$
-
-DELIMITER ;
-
 
 
 /*
@@ -244,6 +227,7 @@ CREATE TABLE Cliente(
 	colonia VARCHAR(255),
 	codigo_postal VARCHAR(255) NOT NULL,
 	fecha_nacimiento DATE NOT NULL,
+    passw VARCHAR(100) NOT NULL,
 	edad INT NULL DEFAULT 0
     
 );
@@ -257,7 +241,6 @@ CREATE TABLE Cliente(
 CREATE TABLE Cuenta(
 	id_cuenta VARCHAR(16) PRIMARY KEY NOT NULL,     -- numero de cuenta
 	fecha_apertura DATE NOT NULL,
-    #password VARCHAR(100) (se puede llegar a usar si el login lo hacemos por numero de cuenta)
 	saldo BIGINT,	
     id_cliente INT NOT NULL,
     FOREIGN KEY (id_cliente) REFERENCES Cliente(id)
@@ -275,16 +258,14 @@ CREATE TABLE Cuenta(
 */
 CREATE TABLE Transaccion(
 	id_transaccion INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-	fecha_transaccion DATE NULL DEFAULT NULL,
-	hora_transaccion TIME NULL DEFAULT NULL, 
+	fecha_hora_transaccion  DATETIME DEFAULT CURRENT_TIMESTAMP, -- establece fecha y hora automaticamente cuando se hace una insercion
 	cantidad INT NOT NULL, 
     tipo_transaccion BOOLEAN DEFAULT TRUE, -- 0 NO ES CLIENTE, 1 ES CLIENTE. La funcion verHistorial() le da el formato para que se vea el tipo de transaccion
     id_cuenta VARCHAR(16) NOT NULL,
     FOREIGN KEY (id_cuenta) REFERENCES Cuenta(id_cuenta)
     
 );
-# TIME: 'HH:MM:SS'
-# DATE: 'YYYY-MM-DD'
+
 
 /*
 	En caso de que sea una transferencia normal de un cliente
