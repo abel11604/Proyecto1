@@ -20,12 +20,13 @@ public class Cliente {
     private String colonia;
     private String codigo_postal;
     private Date fecha_nacimiento;
+    private String passw;
     private int edad;
 
     public Cliente() {
     }
 
-    public Cliente(int id, String nombre, String apellido_paterno, String apellido_materno, String calle, String colonia, String codigo_postal, Date fecha_nacimiento, int edad) {
+    public Cliente(int id, String nombre, String apellido_paterno, String apellido_materno, String calle, String colonia, String codigo_postal, Date fecha_nacimiento, String passw, int edad) {
         this.id = id;
         this.nombre = nombre;
         this.apellido_paterno = apellido_paterno;
@@ -34,10 +35,11 @@ public class Cliente {
         this.colonia = colonia;
         this.codigo_postal = codigo_postal;
         this.fecha_nacimiento = fecha_nacimiento;
+        this.passw = passw;
         this.edad = edad;
     }
 
-    public Cliente(String nombre, String apellido_paterno, String apellido_materno, String calle, String colonia, String codigo_postal, Date fecha_nacimiento, int edad) {
+    public Cliente(String nombre, String apellido_paterno, String apellido_materno, String calle, String colonia, String codigo_postal, Date fecha_nacimiento, String passw, int edad) {
         this.nombre = nombre;
         this.apellido_paterno = apellido_paterno;
         this.apellido_materno = apellido_materno;
@@ -45,9 +47,11 @@ public class Cliente {
         this.colonia = colonia;
         this.codigo_postal = codigo_postal;
         this.fecha_nacimiento = fecha_nacimiento;
+        this.passw = passw;
         this.edad = edad;
     }
 
+    
     public int getId() {
         return id;
     }
@@ -120,10 +124,20 @@ public class Cliente {
         this.edad = edad;
     }
 
+    public String getPassw() {
+        return passw;
+    }
+
+    public void setPassw(String passw) {
+        this.passw = passw;
+    }
+
     @Override
     public String toString() {
-        return "Cliente{" + "id=" + id + ", nombre=" + nombre + ", apellido_paterno=" + apellido_paterno + ", apellido_materno=" + apellido_materno + ", calle=" + calle + ", colonia=" + colonia + ", codigo_postal=" + codigo_postal + ", fecha_nacimiento=" + fecha_nacimiento + ", edad=" + edad + '}';
+        return "Cliente{" + "id=" + id + ", nombre=" + nombre + ", apellido_paterno=" + apellido_paterno + ", apellido_materno=" + apellido_materno + ", calle=" + calle + ", colonia=" + colonia + ", codigo_postal=" + codigo_postal + ", fecha_nacimiento=" + fecha_nacimiento + ", passw=" + passw + ", edad=" + edad + '}';
     }
+
+   
 
 
 }

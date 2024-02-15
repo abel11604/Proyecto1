@@ -31,8 +31,8 @@ public class ClienteDAO implements ICliente {
     public Cliente registrarCliente(Cliente cliente) throws PersistenciaException {
 
         String creaTransaccion = "INSERT INTO Cliente"
-                + "(nombre, apellido_paterno, apellido_materno, calle, colonia, codigo_postal, fecha_nacimiento,edad)"
-                + "VALUES (?,?,?,?,?,?,?,?)";
+                + "(nombre, apellido_paterno, apellido_materno, calle, colonia, codigo_postal, fecha_nacimiento,passw,edad)"
+                + "VALUES (?,?,?,?,?,?,?,?,?)";
 
         Cliente clienteCreado = new Cliente();
 
@@ -46,7 +46,8 @@ public class ClienteDAO implements ICliente {
             st.setString(5, cliente.getColonia());
             st.setString(6, cliente.getCodigo_postal());
             st.setDate(7, cliente.getFecha_nacimiento());
-            st.setInt(8, cliente.getEdad());
+            st.setString(8, cliente.getPassw());
+            st.setInt(9, cliente.getEdad());
 
             int filasAfectadas = st.executeUpdate();
 
@@ -71,7 +72,7 @@ public class ClienteDAO implements ICliente {
     @Override
     public Cliente editarCliente(Cliente cliente) {
 
-        String updateCliente = "UPDATE cliente SET nombre = ?, apellido_paterno = ?, apellido_materno = ?, calle = ?, colonia = ?, codigo_postal = ?, fecha_nacimiento = ?   WHERE id = ?";
+        String updateCliente = "UPDATE cliente SET nombre = ?, apellido_paterno = ?, apellido_materno = ?, calle = ?, colonia = ?, codigo_postal = ?, fecha_nacimiento = ?, passw = ?  WHERE id = ?";
         Cliente clienteActualizado = new Cliente();
 
         if (cliente != null) {
@@ -85,7 +86,8 @@ public class ClienteDAO implements ICliente {
                 updateStatement.setString(4, cliente.getColonia());
                 updateStatement.setString(5, cliente.getCodigo_postal());
                 updateStatement.setDate(6, cliente.getFecha_nacimiento());
-                updateStatement.setInt(7, cliente.getId());
+                updateStatement.setString(7,cliente.getPassw());
+                updateStatement.setInt(8, cliente.getId());
 
                 int filasAfectadas = updateStatement.executeUpdate();
 
