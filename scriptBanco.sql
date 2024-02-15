@@ -1,27 +1,25 @@
 
-/*
-	Trigger que verifica que tipo de transaccion es, cuando se realiza una transaccion, esta funcion se ejecuta y si 
-    la transaccion es por folio y pw (0) se generan las pw y el folio. 
-    
-    Si no, se ejecuta pero no hae nada
-*/
 
+/*Trigger que funciona para que cada que se inserte una transaccion, dependiendo si su tipo es 0 o 1, 
+automaticamente genere el respectivo tipo de transaccion que le corresponda, siendo 1 para las transacciones normales
+ y 0 para las de con folio*/
 DELIMITER $$
-CREATE TRIGGER tipo_transaccion
- AFTER INSERT ON transaccion
- FOR EACH ROW
- BEGIN
-	DECLARE id int;
-    
-	SET id = NEW.id_transaccion;
-	IF NEW.tipo_transaccion = false THEN
-    INSERT INTO TransaccionFolioCliente (id_transaccion,estado) VALUES (NEW.id_transaccion, 0); # crea la transaccion por folio y pw
-    CALL folio(id); # a la transaccion creada, inserta el folio
-    CALL passw(id); # a la transaccion creada, inserta el pw
-	END IF;
-    
- END$$
 
+CREATE TRIGGER Tipo_transaccion
+AFTER INSERT ON Transaccion
+FOR EACH ROW
+BEGIN
+    DECLARE id INT;
+    
+    SET id = NEW.id_transaccion; # se declaran variables
+    IF NEW.tipo_transaccion = 1 THEN
+        INSERT INTO TransaccionNormalCliente (id_transaccion) VALUES (id); # crea la transaccion normal si el tipo es 1
+    ELSE
+        INSERT INTO TransaccionFolioCliente (id_transaccion) VALUES (id); # Crea una transacción con folio si es 0
+        CALL folio(id); # Asigna un folio
+        CALL passw(id); # Asignamos una contraseña
+    END IF;
+END$$
 DELIMITER ;
 
 /*
@@ -90,7 +88,7 @@ DELIMITER ;
 */
 
 DELIMITER $$ 
-CREATE PROCEDURE verHistorial(IN id INT)
+CREATE PROCEDURE verHistorial(IN id VARCHAR(16))
 BEGIN
 	SELECT
 		id_transaccion AS 'Id',
@@ -133,23 +131,6 @@ DELIMITER ;
 
 
 
-/*
-	Este trigger establece automaticamente la hora y la fecha cuando se genera una transaccion
-*/
-
-DELIMITER $$
-CREATE TRIGGER establecer_fecha_hora_transaccion
-BEFORE INSERT ON transaccion
-FOR EACH ROW 
-BEGIN
-	
-	SET NEW.fecha_transaccion = CURDATE();
-    SET NEW.hora_transaccion = CURTIME();
-
-END$$
-
-DELIMITER ;
-
 
 
 /*
@@ -160,7 +141,7 @@ DELIMITER ;
 */
 
 DELIMITER $$
-CREATE PROCEDURE transferencia(IN id_cuenta_origen INT, monto INT, id_cuenta_destino INT)
+CREATE PROCEDURE transferencia(IN id_cuenta_origen VARCHAR(16), monto INT, id_cuenta_destino VARCHAR(16))
 BEGIN 
 			# Declaramos las variables que seran los saldos de las cuentas
 		DECLARE saldo_origen INT; 
@@ -173,9 +154,14 @@ BEGIN
         
 				# Hacemos una transaccion para cumplir con el principio ACID
 			START TRANSACTION;
+            
             UPDATE cuenta SET saldo = saldo - monto WHERE id_cuenta = id_cuenta_origen;
             UPDATE cuenta SET saldo = saldo + monto WHERE id_cuenta = id_cuenta_destino;
 				# El usuario tiene dinero, y no hubo errores, guardamos todos los cambios
+	    INSERT INTO Transaccion (cantidad, tipo_transaccion, id_cuenta) VALUES (-monto, 1, id_cuenta_origen); #Genera la transaccion de retiro
+        /* en la transaccion de retiro considere poner el monto en negativo para representar el retiro en las consultas de historial
+        no se si lo quieras dejar asi o cambiarlo*/
+        INSERT INTO Transaccion (cantidad, tipo_transaccion, id_cuenta) VALUES (monto, 1, id_cuenta_destino); #Genera la Transacción de depósito
             COMMIT; 
             
 		else
@@ -183,13 +169,36 @@ BEGIN
 			ROLLBACK;
 		END IF;
         
-	
-
 END$$
 
 DELIMITER ;
 
+/*
+Trigger que crea y asigna el id a una cuenta cada que se crea
+*/
+DELIMITER $$
 
+CREATE TRIGGER asignar_numero_cuenta
+BEFORE INSERT ON Cuenta
+FOR EACH ROW
+BEGIN
+#se declaran variables
+    DECLARE numero_cuenta VARCHAR(16);
+    DECLARE i INT DEFAULT 1;
+    DECLARE digito INT;
+    
+    #funciona como los de folio y pw solo que aqui estan dentro del trigger
+    SET numero_cuenta = '';
+    WHILE i <= 16 DO
+        SET digito = FLOOR(1 + RAND() * 9); #genera un numero aleatorio de 0 a 9
+        SET numero_cuenta = CONCAT(numero_cuenta, digito);
+        SET i = i + 1;
+    END WHILE;
+    
+    SET NEW.id_cuenta = numero_cuenta;
+END$$
+
+DELIMITER ;
 
 
 
@@ -208,10 +217,7 @@ DELIMITER ;
 
 -- ---------------------------------------------------------- TABLAS ------------------------------------------------------------------------------------
 
-/*
-	Datos del cliente, al ser un banco, todos los datos son necesarios
-    FALTA CALCULAR LA EDAD
-*/
+
 CREATE TABLE Cliente(
 	id INT PRIMARY KEY AUTO_INCREMENT,
 	nombre VARCHAR(50) NOT NULL,
@@ -221,6 +227,7 @@ CREATE TABLE Cliente(
 	colonia VARCHAR(255),
 	codigo_postal VARCHAR(255) NOT NULL,
 	fecha_nacimiento DATE NOT NULL,
+    passw VARCHAR(100) NOT NULL,
 	edad INT NULL DEFAULT 0
     
 );
@@ -232,7 +239,7 @@ CREATE TABLE Cliente(
     La cuenta no se puede borrar, puede ser cancelada o actualizada, pero no borrada
 */
 CREATE TABLE Cuenta(
-	id_cuenta INT PRIMARY KEY NOT NULL,     -- numero de cuenta
+	id_cuenta VARCHAR(16) PRIMARY KEY NOT NULL,     -- numero de cuenta
 	fecha_apertura DATE NOT NULL,
 	saldo BIGINT,	
     id_cliente INT NOT NULL,
@@ -251,16 +258,14 @@ CREATE TABLE Cuenta(
 */
 CREATE TABLE Transaccion(
 	id_transaccion INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-	fecha_transaccion DATE NULL DEFAULT NULL,
-	hora_transaccion TIME NULL DEFAULT NULL, 
+	fecha_hora_transaccion  DATETIME DEFAULT CURRENT_TIMESTAMP, -- establece fecha y hora automaticamente cuando se hace una insercion
 	cantidad INT NOT NULL, 
     tipo_transaccion BOOLEAN DEFAULT TRUE, -- 0 NO ES CLIENTE, 1 ES CLIENTE. La funcion verHistorial() le da el formato para que se vea el tipo de transaccion
-    id_cuenta INT NOT NULL,
+    id_cuenta VARCHAR(16) NOT NULL,
     FOREIGN KEY (id_cuenta) REFERENCES Cuenta(id_cuenta)
     
 );
-# TIME: 'HH:MM:SS'
-# DATE: 'YYYY-MM-DD'
+
 
 /*
 	En caso de que sea una transferencia normal de un cliente
