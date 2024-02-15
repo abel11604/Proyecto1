@@ -4,6 +4,7 @@
  */
 package dao.interfaces;
 
+import dao.excepciones.PersistenciaException;
 import objetos.Transaccion;
 
 /**
@@ -12,9 +13,9 @@ import objetos.Transaccion;
  */
 public interface ITransaccion {
     
-    Transaccion registrarTransaccion(Transaccion t);
-    Transaccion editarTransaccion(Transaccion t);
-    Transaccion eliminarTransaccion(Transaccion t);
-    Transaccion verTransaccion(int id);
+    Transaccion registrarTransaccion(Transaccion t)throws PersistenciaException;
+    Transaccion editarTransaccion(Transaccion t)throws PersistenciaException;
+    Transaccion eliminarTransaccion(Transaccion t)throws PersistenciaException;
+    Transaccion verTransaccion(int id)throws PersistenciaException;
     
 }

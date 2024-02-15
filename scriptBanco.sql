@@ -291,4 +291,4 @@ estado boolean DEFAULT FALSE,
 FOREIGN KEY  (id_transaccion) REFERENCES Transaccion(id_transaccion )
 );
 
-
+INSERT INTO cliente(nombre,apellido_paterno,apellido_materno,calle,colonia,codigo_postal,fecha_nacimiento,edad) VALUES('EAAA','EAAA','EAAA','EAAA','EAAA','EAAA','2020-01-01',null);
