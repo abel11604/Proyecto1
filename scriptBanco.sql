@@ -246,7 +246,7 @@ CREATE TABLE Cuenta(
     FOREIGN KEY (id_cliente) REFERENCES Cliente(id)
 );
 
-
+insert into cuenta values(1,'2020-01-01', 100,1);
 
 /*
 	Una cuenta puede generar 1:N transacciones

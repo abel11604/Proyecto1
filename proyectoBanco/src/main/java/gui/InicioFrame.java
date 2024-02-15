@@ -4,17 +4,35 @@
  */
 package gui;
 
+import dao.ClienteDAO;
+import dao.ConexionDB;
+import dao.interfaces.IConexion;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import objetos.Cliente;
+
 /**
  *
  * @author fabri
  */
 public class InicioFrame extends javax.swing.JFrame {
 
+    ClienteDAO clienteDao;
+    IConexion con;
+    Cliente cliente;
+
     /**
      * Creates new form InicioFrame
      */
     public InicioFrame() {
         initComponents();
+        con = new ConexionDB("jdbc:mysql://localhost:3306/banco", "root", "root");
+
+        clienteDao = new ClienteDAO(con);
     }
 
     /**
@@ -26,6 +44,7 @@ public class InicioFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+<<<<<<< Updated upstream
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -39,6 +58,21 @@ public class InicioFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+=======
+        txtBienvenido = new javax.swing.JLabel();
+        btnInicioSesion = new javax.swing.JButton();
+        panel = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        labelNombre = new javax.swing.JTextField();
+        labelPw = new javax.swing.JTextField();
+        btnAceptar = new javax.swing.JButton();
+        btnRegresar = new javax.swing.JButton();
+        btnRetirarSinCuenta = new javax.swing.JButton();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMinimumSize(new java.awt.Dimension(1080, 1080));
+>>>>>>> Stashed changes
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -82,6 +116,7 @@ public class InicioFrame extends javax.swing.JFrame {
             }
         });
 
+<<<<<<< Updated upstream
         jButton3.setBackground(new java.awt.Color(255, 255, 255));
         jButton3.setForeground(new java.awt.Color(50, 94, 249));
         jButton3.setText("Realizar retiro sin cuenta");
@@ -142,6 +177,110 @@ public class InicioFrame extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jButton3)
                 .addContainerGap(28, Short.MAX_VALUE))
+=======
+        panel.setVisible(false);
+
+        jLabel1.setText("Nombre");
+
+        jLabel2.setText("Contrasena");
+
+        btnAceptar.setText("Aceptar");
+        btnAceptar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAceptarActionPerformed(evt);
+            }
+        });
+
+        btnRegresar.setText("Regresar");
+        btnRegresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegresarActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout panelLayout = new javax.swing.GroupLayout(panel);
+        panel.setLayout(panelLayout);
+        panelLayout.setHorizontalGroup(
+            panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelLayout.createSequentialGroup()
+                .addGap(79, 79, 79)
+                .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelLayout.createSequentialGroup()
+                        .addComponent(btnRegresar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnAceptar)
+                        .addGap(77, 77, 77))
+                    .addGroup(panelLayout.createSequentialGroup()
+                        .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel1))
+                        .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(panelLayout.createSequentialGroup()
+                                .addGap(54, 54, 54)
+                                .addComponent(labelNombre))
+                            .addGroup(panelLayout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
+                                .addComponent(labelPw, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(64, 64, 64))))
+        );
+        panelLayout.setVerticalGroup(
+            panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelLayout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(labelNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
+                .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(labelPw, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(44, 44, 44)
+                .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAceptar)
+                    .addComponent(btnRegresar))
+                .addGap(46, 46, 46))
+        );
+
+        btnRetirarSinCuenta.setText("Retiro con folio");
+        btnRetirarSinCuenta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRetirarSinCuentaActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(455, 455, 455)
+                        .addComponent(txtBienvenido))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(287, 287, 287)
+                        .addComponent(panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(435, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(155, 155, 155)
+                .addComponent(btnInicioSesion)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnRetirarSinCuenta)
+                .addGap(301, 301, 301))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(56, 56, 56)
+                .addComponent(txtBienvenido)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 132, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnInicioSesion)
+                    .addComponent(btnRetirarSinCuenta))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(62, 62, 62))
+>>>>>>> Stashed changes
         );
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 460, 370));
@@ -149,9 +288,59 @@ public class InicioFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+<<<<<<< Updated upstream
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
+=======
+    private void btnInicioSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInicioSesionActionPerformed
+        txtBienvenido.setVisible(false);
+        btnInicioSesion.setVisible(false);
+        btnRetirarSinCuenta.setVisible(false);
+        panel.setVisible(true);
+
+
+    }//GEN-LAST:event_btnInicioSesionActionPerformed
+>>>>>>> Stashed changes
+
+    private void btnRetirarSinCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRetirarSinCuentaActionPerformed
+        // TODO add your handling code here:
+
+
+    }//GEN-LAST:event_btnRetirarSinCuentaActionPerformed
+
+    private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
+        txtBienvenido.setVisible(true);
+        btnInicioSesion.setVisible(true);
+        btnRetirarSinCuenta.setVisible(true);
+        panel.setVisible(false);
+
+
+    }//GEN-LAST:event_btnRegresarActionPerformed
+
+    private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
+        Connection c;
+        cliente = new Cliente();
+        try {
+            c = con.crearConexion();
+            PreparedStatement selectStatement = c.prepareStatement("SELECT * FROM cliente WHERE nombre = ? AND passw = ?");
+            selectStatement.setString(1, labelNombre.getText());
+            selectStatement.setString(2, labelPw.getText());
+            ResultSet resultSet = selectStatement.executeQuery();
+                if(resultSet.next()){
+                    cliente.setId(resultSet.getInt("id"));
+                    cliente.setNombre(resultSet.getString("nombre"));
+                    CuentasDlg dlg = new CuentasDlg(this, true, cliente);
+                    dlg.setVisible(true);
+                }else{
+                    System.out.println("no existe bro");
+                }
+        } catch (SQLException ex) {
+            Logger.getLogger(InicioFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+
+    }//GEN-LAST:event_btnAceptarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -189,6 +378,7 @@ public class InicioFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+<<<<<<< Updated upstream
     private javax.swing.JPasswordField contraseñaField;
     private javax.swing.JTextField idClientetextField;
     private javax.swing.JButton jButton1;
@@ -199,5 +389,17 @@ public class InicioFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel2;
+=======
+    private javax.swing.JButton btnAceptar;
+    private javax.swing.JButton btnInicioSesion;
+    private javax.swing.JButton btnRegresar;
+    private javax.swing.JButton btnRetirarSinCuenta;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JTextField labelNombre;
+    private javax.swing.JTextField labelPw;
+    private javax.swing.JPanel panel;
+    private javax.swing.JLabel txtBienvenido;
+>>>>>>> Stashed changes
     // End of variables declaration//GEN-END:variables
 }

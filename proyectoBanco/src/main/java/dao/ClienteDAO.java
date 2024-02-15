@@ -153,7 +153,7 @@ public class ClienteDAO implements ICliente {
 
             if (resultSet.next()) {
                 clienteEncontrado = new Cliente();
-                clienteEncontrado.setId(resultSet.getInt("idCliente"));
+                clienteEncontrado.setId(resultSet.getInt("id"));
                 clienteEncontrado.setNombre(resultSet.getString("nombre"));
                 clienteEncontrado.setApellido_materno(resultSet.getString("apellido_materno"));
                 clienteEncontrado.setApellido_paterno(resultSet.getString("apellido_paterno"));

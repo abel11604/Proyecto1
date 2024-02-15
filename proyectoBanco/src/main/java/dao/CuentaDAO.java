@@ -11,6 +11,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import objetos.Cliente;
@@ -179,6 +181,41 @@ public class CuentaDAO implements ICuenta {
 
         }
         return cuentaEncontrada;
+    }
+   public ArrayList<Cuenta> buscarCuentaPorCliente(int id) {
+       ArrayList<Cuenta> cuentas = new ArrayList<>();
+        String selectCuenta
+                = "SELECT c.id_cuenta, c.fecha_apertura, c.saldo, cli.id "
+                + "FROM cuenta c "
+                + "JOIN cliente cli ON c.id_cliente = cli.id "
+                + "WHERE c.id_cliente = ?";
+        Cuenta cuentaEncontrada;
+
+        try {
+            Connection c = conexion.crearConexion();
+            PreparedStatement selectStatement = c.prepareStatement(selectCuenta);
+
+            selectStatement.setInt(1, id);
+
+            ResultSet resultSet = selectStatement.executeQuery();
+
+            while (resultSet.next()) {
+                cuentaEncontrada = new Cuenta();
+                cuentaEncontrada.setIdCuenta(resultSet.getInt("id_cuenta"));
+                cuentaEncontrada.setFechaApertura(resultSet.getDate("fecha_apertura"));
+                cuentaEncontrada.setSaldo(resultSet.getInt("saldo"));
+                Cliente cliente = new Cliente();
+                cliente.setId(resultSet.getInt("id"));
+                cuentaEncontrada.setCliente(cliente);
+                cuentas.add(cuentaEncontrada);
+
+            }
+
+        } catch (SQLException e) {
+            Logger.getLogger(CuentaDAO.class.getName()).log(Level.SEVERE, "Error en la operacion, verifica los datos", e);
+
+        }
+        return cuentas;
     }
 
 }
