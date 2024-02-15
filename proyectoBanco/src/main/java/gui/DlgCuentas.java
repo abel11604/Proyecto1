@@ -36,7 +36,7 @@ public class DlgCuentas extends javax.swing.JDialog {
         lista.setSelectionBackground(new Color(176, 186, 195));
         lista.setFont(new Font("Yu Gothic UI Semilight", 18, 18));
         getContentPane().add(panelSeleccionarCuenta);
-        panelSeleccionarCuenta.setBounds(200, 170, 687, 415);
+        panelSeleccionarCuenta.setBounds(300, 170, 687, 415);
         getContentPane().add(panelTransf);
         panelTransf.setBounds(300, 170, 687, 415);
         // x,   y,  WIDTH, HEIGHT
@@ -64,7 +64,8 @@ public class DlgCuentas extends javax.swing.JDialog {
         btnTransf = new javax.swing.JLabel();
         txtBienvenido = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        btnFolio = new javax.swing.JLabel();
+        btnHistorial = new javax.swing.JLabel();
+        btnFolio1 = new javax.swing.JLabel();
 
         panelSeleccionarCuenta.setVisible(false);
 
@@ -233,7 +234,7 @@ public class DlgCuentas extends javax.swing.JDialog {
         });
         getContentPane().setLayout(null);
 
-        btnTransf.setFont(new java.awt.Font("Yu Gothic UI Semilight", 0, 24)); // NOI18N
+        btnTransf.setFont(new java.awt.Font("Yu Gothic UI Semilight", 0, 27)); // NOI18N
         btnTransf.setText("Transferir");
         btnTransf.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnTransf.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -242,28 +243,39 @@ public class DlgCuentas extends javax.swing.JDialog {
             }
         });
         getContentPane().add(btnTransf);
-        btnTransf.setBounds(560, 220, 95, 32);
+        btnTransf.setBounds(540, 220, 110, 41);
 
-        txtBienvenido.setFont(new java.awt.Font("Yu Gothic UI Semilight", 1, 24)); // NOI18N
+        txtBienvenido.setFont(new java.awt.Font("Yu Gothic UI Semilight", 1, 31)); // NOI18N
         getContentPane().add(txtBienvenido);
-        txtBienvenido.setBounds(490, 50, 249, 32);
+        txtBienvenido.setBounds(450, 20, 330, 32);
 
-        jLabel5.setFont(new java.awt.Font("Yu Gothic UI Semilight", 1, 24)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Yu Gothic UI Semilight", 1, 31)); // NOI18N
         jLabel5.setText("¿Qué operación desea realizar?   ");
         //jLabel5.setLocation(625, 100);
         getContentPane().add(jLabel5);
-        jLabel5.setBounds(440, 100, 363, 32);
+        jLabel5.setBounds(380, 70, 470, 42);
 
-        btnFolio.setFont(new java.awt.Font("Yu Gothic UI Semilight", 0, 24)); // NOI18N
-        btnFolio.setText("Generar Folio");
-        btnFolio.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnFolio.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnHistorial.setFont(new java.awt.Font("Yu Gothic UI Semilight", 0, 27)); // NOI18N
+        btnHistorial.setText("Estado de Cuenta");
+        btnHistorial.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnHistorial.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnFolioMouseClicked(evt);
+                btnHistorialMouseClicked(evt);
             }
         });
-        getContentPane().add(btnFolio);
-        btnFolio.setBounds(540, 320, 137, 32);
+        getContentPane().add(btnHistorial);
+        btnHistorial.setBounds(490, 340, 210, 37);
+
+        btnFolio1.setFont(new java.awt.Font("Yu Gothic UI Semilight", 0, 27)); // NOI18N
+        btnFolio1.setText("Generar Folio");
+        btnFolio1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnFolio1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnFolio1MouseClicked(evt);
+            }
+        });
+        getContentPane().add(btnFolio1);
+        btnFolio1.setBounds(510, 470, 160, 37);
 
         pack();
         setLocationRelativeTo(null);
@@ -297,10 +309,10 @@ public class DlgCuentas extends javax.swing.JDialog {
     }//GEN-LAST:event_jLabel2MouseClicked
 
 
-    private void btnFolioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnFolioMouseClicked
+    private void btnHistorialMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnHistorialMouseClicked
 
 
-    }//GEN-LAST:event_btnFolioMouseClicked
+    }//GEN-LAST:event_btnHistorialMouseClicked
 
     private void btnRegresarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegresarMouseClicked
 
@@ -329,11 +341,16 @@ public class DlgCuentas extends javax.swing.JDialog {
 
     }//GEN-LAST:event_labelDestinoActionPerformed
 
+    private void btnFolio1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnFolio1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnFolio1MouseClicked
+
     private void mostrarDlgPrincipal() {
         panelSeleccionarCuenta.setVisible(false);
         panelTransf.setVisible(false);
         btnTransf.setVisible(true);
-        btnFolio.setVisible(true);
+        btnFolio1.setVisible(true);
+        btnHistorial.setVisible(true);
 
     }
 
@@ -341,7 +358,8 @@ public class DlgCuentas extends javax.swing.JDialog {
 
         panelSeleccionarCuenta.setVisible(true);
         btnTransf.setVisible(false);
-        btnFolio.setVisible(false);
+        btnHistorial.setVisible(false);
+        btnFolio1.setVisible(false);
         panelSeleccionarCuenta.setVisible(true);
         cuentas = cuentaDao.buscarCuentaPorCliente(cliente.getId());
         model.removeAllElements();
@@ -359,7 +377,8 @@ public class DlgCuentas extends javax.swing.JDialog {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel btnAceptar;
-    private javax.swing.JLabel btnFolio;
+    private javax.swing.JLabel btnFolio1;
+    private javax.swing.JLabel btnHistorial;
     private javax.swing.JLabel btnRegresar;
     private javax.swing.JLabel btnTransf;
     private javax.swing.JLabel jLabel1;
