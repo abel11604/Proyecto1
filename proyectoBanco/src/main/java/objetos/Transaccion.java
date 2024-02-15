@@ -4,8 +4,8 @@
  */
 package objetos;
 
-import java.sql.Date;
-import java.sql.Time;
+import java.sql.Timestamp;
+
 
 /**
  *
@@ -14,16 +14,14 @@ import java.sql.Time;
 public class Transaccion {
 
     private int id_transaccion;
-    private Date fecha_transaccion;
-    private Time hora_transaccion;
+    private Timestamp fechahora_transaccion;
     private boolean tipo_transaccion;
     private int cantidad;
     private Cuenta cuenta;
 
-    public Transaccion(int id_transaccion, Date fecha_transaccion, Time hora_transaccion, boolean tipo_transaccion, int cantidad, Cuenta cuenta) {
+    public Transaccion(int id_transaccion, Timestamp fechahora_transaccion, boolean tipo_transaccion, int cantidad, Cuenta cuenta) {
         this.id_transaccion = id_transaccion;
-        this.fecha_transaccion = fecha_transaccion;
-        this.hora_transaccion = hora_transaccion;
+        this.fechahora_transaccion=fechahora_transaccion;
         this.tipo_transaccion = tipo_transaccion;
         this.cantidad = cantidad;
         this.cuenta = cuenta;
@@ -32,9 +30,8 @@ public class Transaccion {
     public Transaccion() {
     }
 
-    public Transaccion(Date fecha_transaccion, Time hora_transaccion, boolean tipo_transaccion, int cantidad, Cuenta cuenta) {
-        this.fecha_transaccion = fecha_transaccion;
-        this.hora_transaccion = hora_transaccion;
+    public Transaccion(Timestamp fechaHora_transaccion, boolean tipo_transaccion, int cantidad, Cuenta cuenta) {
+       this.fechahora_transaccion=fechahora_transaccion;
         this.tipo_transaccion = tipo_transaccion;
         this.cantidad = cantidad;
         this.cuenta = cuenta;
@@ -48,21 +45,15 @@ public class Transaccion {
         this.id_transaccion = id_transaccion;
     }
 
-    public Date getFecha_transaccion() {
-        return fecha_transaccion;
+    public Timestamp getFechahora_transaccion() {
+        return fechahora_transaccion;
     }
 
-    public void setFecha_transaccion(Date fecha_transaccion) {
-        this.fecha_transaccion = fecha_transaccion;
+    public void setFechahora_transaccion(Timestamp fechahora_transaccion) {
+        this.fechahora_transaccion = fechahora_transaccion;
     }
 
-    public Time getHora_transaccion() {
-        return hora_transaccion;
-    }
-
-    public void setHora_transaccion(Time hora_transaccion) {
-        this.hora_transaccion = hora_transaccion;
-    }
+   
 
     public boolean isTipo_transaccion() {
         return tipo_transaccion;
@@ -90,8 +81,10 @@ public class Transaccion {
 
     @Override
     public String toString() {
-        return "Transaccion{" + "id_transaccion=" + id_transaccion + ", fecha_transaccion=" + fecha_transaccion + ", hora_transaccion=" + hora_transaccion + ", tipo_transaccion=" + tipo_transaccion + ", cantidad=" + cantidad + ", cuenta=" + cuenta + '}';
+        return "Transaccion{" + "id_transaccion=" + id_transaccion + ", fechahora_transaccion=" + fechahora_transaccion + ", tipo_transaccion=" + tipo_transaccion + ", cantidad=" + cantidad + ", cuenta=" + cuenta + '}';
     }
+
+   
     
     
     
