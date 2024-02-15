@@ -57,6 +57,7 @@ public class ClienteDAO implements ICliente {
                 if (generatedKeys.next()) {
                     int idGenerado = generatedKeys.getInt(1);
                     clienteCreado.setId(idGenerado);
+                    clienteCreado.setNombre(generatedKeys.getString("nombre"));
                 } else {
                     throw new SQLException("No se pudo obtener el ID generado.");
                 }

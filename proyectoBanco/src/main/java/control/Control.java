@@ -28,7 +28,7 @@ public class Control {
     public Control() {
         clienteDAO = new ClienteDAO(conexionDB);
     }
-
+    
     //public boolean registrarCliente(JFrame frame){
     //}
 }

@@ -60,58 +60,44 @@ private Cliente cliente;
 
         jLabel1.setBackground(new java.awt.Color(0, 0, 0));
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setText("Registrarse");
 
         jTextField1.setBackground(new java.awt.Color(176, 186, 195));
-        jTextField1.setForeground(new java.awt.Color(0, 0, 0));
 
         jLabel2.setBackground(new java.awt.Color(0, 0, 0));
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setText("Nombre(s)");
 
         jTextField2.setBackground(new java.awt.Color(176, 186, 195));
-        jTextField2.setForeground(new java.awt.Color(0, 0, 0));
 
         jTextField3.setBackground(new java.awt.Color(176, 186, 195));
-        jTextField3.setForeground(new java.awt.Color(0, 0, 0));
 
         jTextField5.setBackground(new java.awt.Color(176, 186, 195));
-        jTextField5.setForeground(new java.awt.Color(0, 0, 0));
 
         jTextField9.setBackground(new java.awt.Color(176, 186, 195));
-        jTextField9.setForeground(new java.awt.Color(0, 0, 0));
 
         jTextField10.setBackground(new java.awt.Color(176, 186, 195));
-        jTextField10.setForeground(new java.awt.Color(0, 0, 0));
 
         jLabel3.setBackground(new java.awt.Color(0, 0, 0));
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setText("Apellido Paterno");
 
         jLabel4.setBackground(new java.awt.Color(0, 0, 0));
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setText("Apellido Materno");
 
         jLabel5.setBackground(new java.awt.Color(0, 0, 0));
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(0, 0, 0));
         jLabel5.setText("Calle");
 
         jLabel6.setBackground(new java.awt.Color(0, 0, 0));
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(0, 0, 0));
         jLabel6.setText("Colonia");
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(0, 0, 0));
         jLabel7.setText("C.P");
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(0, 0, 0));
         jLabel8.setText("Contraseña");
 
         jPasswordField1.setBackground(new java.awt.Color(176, 186, 195));
@@ -121,22 +107,23 @@ private Cliente cliente;
         jPasswordField2.setText("jPasswordField1");
 
         jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(0, 0, 0));
         jLabel9.setText("Confirmar contraseña");
 
         jButton1.setBackground(new java.awt.Color(249, 237, 50));
         jButton1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(0, 0, 0));
         jButton1.setText("Registrarse");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jDateChooser1.setBackground(new java.awt.Color(153, 153, 153));
-        jDateChooser1.setForeground(new java.awt.Color(0, 0, 0));
         jDateChooser1.setDateFormatString("y MMM d");
         jDateChooser1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
 
         jLabel10.setBackground(new java.awt.Color(255, 255, 255));
         jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel10.setForeground(new java.awt.Color(0, 0, 0));
         jLabel10.setText("Fecha de nacimiento");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -228,6 +215,14 @@ private Cliente cliente;
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        
+        
+
+
+
+    }//GEN-LAST:event_jButton1ActionPerformed
 
 
 

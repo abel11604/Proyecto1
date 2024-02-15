@@ -12,7 +12,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import objetos.Cliente;
 import objetos.Cuenta;
 import objetos.Transaccion;
 
@@ -42,7 +41,7 @@ public class TransaccionDAO implements ITransaccion {
             PreparedStatement st = con.prepareStatement(creaTransaccion);
             st.setInt(1, t.getCantidad());
             st.setBoolean(2, t.isTipo_transaccion());
-            st.setInt(3, t.getCuenta().getIdCuenta());
+            st.setString(3, t.getCuenta().getIdCuenta());
 
         } catch (SQLException e) {
             Logger.getLogger(TransaccionDAO.class.getName()).log(Level.SEVERE, "Error al intentar eliminar la cuenta", e);
@@ -112,7 +111,7 @@ public class TransaccionDAO implements ITransaccion {
                 transaccionEncontrada.setCantidad(resultSet.getInt("cantidad"));
 
                 Cuenta cuenta = new Cuenta();
-                cuenta.setIdCuenta(resultSet.getInt("id_cuenta"));
+                cuenta.setIdCuenta(resultSet.getString("id_cuenta"));
 
                 transaccionEncontrada.setCuenta(cuenta);
 

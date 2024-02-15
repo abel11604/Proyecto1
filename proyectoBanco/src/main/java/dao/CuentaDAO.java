@@ -12,7 +12,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import objetos.Cliente;
@@ -28,16 +27,17 @@ public class CuentaDAO implements ICuenta {
 
     public CuentaDAO(IConexion conexion) {
         this.conexion = conexion;
+
     }
 
-    public boolean transferencia(int idOrigen, int monto, int idDestino) {
+    public boolean transferencia(String idOrigen, int monto, String idDestino) {
         try {
             Connection con = conexion.crearConexion();
 
             CallableStatement callableStatement = con.prepareCall("{CALL transferencia(?,?,?)}");
-            callableStatement.setInt(1, idOrigen);
+            callableStatement.setString(1, idOrigen);
             callableStatement.setInt(2, monto);
-            callableStatement.setInt(3, idDestino);
+            callableStatement.setString(3, idDestino);
             callableStatement.execute();
 
         } catch (SQLException e) {
@@ -49,8 +49,6 @@ public class CuentaDAO implements ICuenta {
 
     }
 
-    
-    
     @Override
     public Cuenta registrarCuenta(Cuenta cuenta) {
         String creaCuenta = "INSERT INTO cuenta"
@@ -71,7 +69,7 @@ public class CuentaDAO implements ICuenta {
                 ResultSet generatedKeys = st.getGeneratedKeys();
 
                 if (generatedKeys.next()) {
-                    int idGenerado = generatedKeys.getInt(1);
+                    String idGenerado = generatedKeys.getString(1);
                     cuentaCreada.setIdCuenta(idGenerado);
                 } else {
                     throw new SQLException("No se pudo obtener el ID generado.");
@@ -100,7 +98,7 @@ public class CuentaDAO implements ICuenta {
                 PreparedStatement updateStatement = c.prepareStatement(updateCuenta);
 
                 updateStatement.setInt(1, cuenta.getSaldo());
-                updateStatement.setInt(2, cuenta.getIdCuenta());
+                updateStatement.setString(2, cuenta.getIdCuenta());
 
                 int filasAfectadas = updateStatement.executeUpdate();
 
@@ -130,7 +128,7 @@ public class CuentaDAO implements ICuenta {
             try {
                 Connection c = conexion.crearConexion();
                 PreparedStatement deleteStatement = c.prepareStatement(deleteCuenta);
-                deleteStatement.setInt(1, cuenta.getIdCuenta());
+                deleteStatement.setString(1, cuenta.getIdCuenta());
                 int filasAfectadas = deleteStatement.executeUpdate();
                 if (filasAfectadas > 0) {
                     cuentaEliminada.setIdCuenta(cuenta.getIdCuenta());
@@ -167,10 +165,10 @@ public class CuentaDAO implements ICuenta {
 
             if (resultSet.next()) {
                 cuentaEncontrada = new Cuenta();
-                cuentaEncontrada.setIdCuenta(resultSet.getInt("id_cuenta"));
+                cuentaEncontrada.setIdCuenta(resultSet.getString("id_cuenta"));
                 cuentaEncontrada.setSaldo(resultSet.getInt("saldo"));
                 Cliente cliente = new Cliente();
-                cliente.setId(resultSet.getInt("id_cliente"));
+                cliente.setId(resultSet.getInt("id"));
 
                 cuentaEncontrada.setCliente(cliente);
 
@@ -182,8 +180,9 @@ public class CuentaDAO implements ICuenta {
         }
         return cuentaEncontrada;
     }
-   public ArrayList<Cuenta> buscarCuentaPorCliente(int id) {
-       ArrayList<Cuenta> cuentas = new ArrayList<>();
+
+    public ArrayList<Cuenta> buscarCuentaPorCliente(int id) {
+        ArrayList<Cuenta> cuentas = new ArrayList<>();
         String selectCuenta
                 = "SELECT c.id_cuenta, c.fecha_apertura, c.saldo, cli.id "
                 + "FROM cuenta c "
@@ -201,7 +200,7 @@ public class CuentaDAO implements ICuenta {
 
             while (resultSet.next()) {
                 cuentaEncontrada = new Cuenta();
-                cuentaEncontrada.setIdCuenta(resultSet.getInt("id_cuenta"));
+                cuentaEncontrada.setIdCuenta(resultSet.getString("id_cuenta"));
                 cuentaEncontrada.setFechaApertura(resultSet.getDate("fecha_apertura"));
                 cuentaEncontrada.setSaldo(resultSet.getInt("saldo"));
                 Cliente cliente = new Cliente();
