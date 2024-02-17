@@ -4,16 +4,19 @@
  */
 package gui;
 
+import control.Control;
+
 /**
  *
  * @author fabri
  */
 public class FrameInicio extends javax.swing.JFrame {
-
+Control control;
     /**
      * Creates new form InicioFrame
      */
     public FrameInicio() {
+        control=new Control();
         initComponents();
     }
 
@@ -31,11 +34,11 @@ public class FrameInicio extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         idClientetextField = new javax.swing.JTextField();
-        contraseñaField = new javax.swing.JPasswordField();
+        contraseñaTextField = new javax.swing.JPasswordField();
         jLabel4 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        inicioSesionBoton = new javax.swing.JButton();
+        registrarseBoton = new javax.swing.JButton();
+        retiroFolioBoton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -55,30 +58,30 @@ public class FrameInicio extends javax.swing.JFrame {
         idClientetextField.setBackground(new java.awt.Color(176, 186, 195));
         idClientetextField.setHorizontalAlignment(javax.swing.JTextField.LEFT);
 
-        contraseñaField.setBackground(new java.awt.Color(176, 186, 195));
+        contraseñaTextField.setBackground(new java.awt.Color(176, 186, 195));
 
         jLabel4.setBackground(new java.awt.Color(124, 131, 138));
         jLabel4.setForeground(new java.awt.Color(124, 131, 138));
         jLabel4.setText("¿No eres cliente?");
 
-        jButton1.setBackground(new java.awt.Color(249, 237, 50));
-        jButton1.setText("Iniciar sesion");
+        inicioSesionBoton.setBackground(new java.awt.Color(249, 237, 50));
+        inicioSesionBoton.setText("Iniciar sesion");
 
-        jButton2.setForeground(new java.awt.Color(50, 94, 249));
-        jButton2.setText("Registrarse");
-        jButton2.setBorderPainted(false);
-        jButton2.setContentAreaFilled(false);
-        jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        registrarseBoton.setForeground(new java.awt.Color(50, 94, 249));
+        registrarseBoton.setText("Registrarse");
+        registrarseBoton.setBorderPainted(false);
+        registrarseBoton.setContentAreaFilled(false);
+        registrarseBoton.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        registrarseBoton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                registrarseBotonActionPerformed(evt);
             }
         });
 
-        jButton3.setForeground(new java.awt.Color(50, 94, 249));
-        jButton3.setText("Realizar retiro sin cuenta");
-        jButton3.setBorderPainted(false);
-        jButton3.setContentAreaFilled(false);
+        retiroFolioBoton.setForeground(new java.awt.Color(50, 94, 249));
+        retiroFolioBoton.setText("Realizar retiro sin cuenta");
+        retiroFolioBoton.setBorderPainted(false);
+        retiroFolioBoton.setContentAreaFilled(false);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -97,19 +100,19 @@ public class FrameInicio extends javax.swing.JFrame {
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(idClientetextField)
-                                    .addComponent(contraseñaField, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(contraseñaTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGap(117, 117, 117)
-                                .addComponent(jButton1))))
+                                .addComponent(inicioSesionBoton))))
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addGroup(jPanel2Layout.createSequentialGroup()
                             .addContainerGap()
-                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(retiroFolioBoton, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
                             .addGap(97, 97, 97)
                             .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jButton2))))
+                            .addComponent(registrarseBoton))))
                 .addContainerGap(117, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -124,26 +127,27 @@ public class FrameInicio extends javax.swing.JFrame {
                 .addGap(49, 49, 49)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(contraseñaField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(contraseñaTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(37, 37, 37)
-                .addComponent(jButton1)
+                .addComponent(inicioSesionBoton)
                 .addGap(17, 17, 17)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(registrarseBoton, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jButton3)
+                .addComponent(retiroFolioBoton)
                 .addContainerGap(28, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 460, 370));
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    private void registrarseBotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registrarseBotonActionPerformed
+        control.registrarCliente(this);
+    }//GEN-LAST:event_registrarseBotonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -184,15 +188,15 @@ public class FrameInicio extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPasswordField contraseñaField;
+    private javax.swing.JPasswordField contraseñaTextField;
     private javax.swing.JTextField idClientetextField;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JButton inicioSesionBoton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JButton registrarseBoton;
+    private javax.swing.JButton retiroFolioBoton;
     // End of variables declaration//GEN-END:variables
 }

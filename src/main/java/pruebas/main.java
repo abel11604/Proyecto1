@@ -15,7 +15,7 @@ public class main {
         //prueabs 
         IConexion con = new ConexionDB("jdbc:mysql://localhost:3306/banco", "root", "root");
         ClienteDAO clienteDao = new ClienteDAO(con);
-        Cliente cliente = clienteDao.buscarCliente(1);
+        Cliente cliente = clienteDao.buscarCliente(41180);
         DlgCuentas dlg = new DlgCuentas(null, true, cliente);
         dlg.setVisible(true);
 

@@ -4,6 +4,7 @@
  */
 package dao;
 
+import control.Negocio;
 import dao.excepciones.PersistenciaException;
 import dao.interfaces.ICliente;
 import dao.interfaces.IConexion;
@@ -31,36 +32,30 @@ public class ClienteDAO implements ICliente {
     public Cliente registrarCliente(Cliente cliente) throws PersistenciaException {
 
         String creaTransaccion = "INSERT INTO Cliente"
-                + "(nombre, apellido_paterno, apellido_materno, calle, colonia, codigo_postal, fecha_nacimiento,passw,edad)"
+                + "(id,nombre, apellido_paterno, apellido_materno, calle, colonia, codigo_postal, fecha_nacimiento,passw)"
                 + "VALUES (?,?,?,?,?,?,?,?,?)";
 
         Cliente clienteCreado = new Cliente();
-
+        Negocio logNegocio = new Negocio();
+        
         try {
+            logNegocio.generarID(cliente);
             Connection con = conexion.crearConexion();
-            PreparedStatement st = con.prepareStatement(creaTransaccion, PreparedStatement.RETURN_GENERATED_KEYS);
-            st.setString(1, cliente.getNombre());
-            st.setString(2, cliente.getApellido_materno());
-            st.setString(3, cliente.getApellido_paterno());
-            st.setString(4, cliente.getCalle());
-            st.setString(5, cliente.getColonia());
-            st.setString(6, cliente.getCodigo_postal());
-            st.setDate(7, cliente.getFecha_nacimiento());
-            st.setString(8, cliente.getPassw());
-            st.setInt(9, cliente.getEdad());
+            PreparedStatement st = con.prepareStatement(creaTransaccion);
+            st.setInt(1, cliente.getId());
+            st.setString(2, cliente.getNombre());
+            st.setString(3, cliente.getApellido_materno());
+            st.setString(4, cliente.getApellido_paterno());
+            st.setString(5, cliente.getCalle());
+            st.setString(6, cliente.getColonia());
+            st.setString(7, cliente.getCodigo_postal());
+            st.setDate(8, cliente.getFecha_nacimiento());
+            st.setString(9, cliente.getPassw());
 
             int filasAfectadas = st.executeUpdate();
 
             if (filasAfectadas > 0) {
-                ResultSet generatedKeys = st.getGeneratedKeys();
-
-                if (generatedKeys.next()) {
-                    int idGenerado = generatedKeys.getInt(1);
-                    clienteCreado.setId(idGenerado);
-                    clienteCreado.setNombre(generatedKeys.getString("nombre"));
-                } else {
-                    throw new SQLException("No se pudo obtener el ID generado.");
-                }
+                clienteCreado.setId(cliente.getId());
             }
         } catch (SQLException e) {
             Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, "Error en la operacion", e);
@@ -142,7 +137,7 @@ public class ClienteDAO implements ICliente {
         String selectCliente
                 = "SELECT * FROM cliente WHERE id = ?";
 
-        Cliente clienteEncontrado = new Cliente();
+        Cliente clienteEncontrado = null;
 
         try {
             Connection c = conexion.crearConexion();
