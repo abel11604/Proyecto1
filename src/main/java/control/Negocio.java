@@ -52,4 +52,19 @@ public class Negocio {
         }
         return cliente;
     }
+
+    public Cuenta generarNumCuenta(Cuenta cuenta) {
+        boolean id = false;
+// se repite hasta que lo que regrese el metodo buscar cliente sea null, osea no repetido 
+        while (!id) {
+            String idCliente = RandomStringUtils.randomNumeric(16);
+            if (cuentaDAO.buscarCuenta(idCliente) == null) {
+
+                cuenta.setIdCuenta(idCliente);
+                id = true;
+            }
+
+        }
+        return cuenta;
+    }
 }

@@ -15,5 +15,5 @@ public interface ICuenta {
     Cuenta registrarCuenta(Cuenta cuenta)throws PersistenciaException;
     Cuenta editarCuenta(Cuenta cuenta)throws PersistenciaException;
     Cuenta eliminarCuenta(Cuenta cuenta)throws PersistenciaException;
-    Cuenta buscarCuenta(int id)throws PersistenciaException;
+    Cuenta buscarCuenta(String id)throws PersistenciaException;
 }

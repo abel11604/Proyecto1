@@ -15,6 +15,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
 import objetos.Cliente;
+import objetos.Cuenta;
 
 /**
  *
@@ -38,14 +39,14 @@ public class Control {
 
     public boolean registrarCliente(JFrame frame) {
         Cliente cliente = new Cliente();
-        //Cuenta cuenta=new Cuenta();
+        Cuenta cuenta=new Cuenta();
         DlgRegistro dlgRegistro;
         dlgRegistro = new DlgRegistro(frame, true, cliente);
         try {
             clienteDAO.registrarCliente(cliente);
-           // cuenta.setCliente(cliente);
-            //cuenta.setSaldo(1000);
-            //cuentaDAO.registrarCuenta(cuenta);
+           cuenta.setCliente(cliente);
+            cuenta.setSaldo(1000);
+            cuentaDAO.registrarCuenta(cuenta);
         } catch (PersistenciaException ex) {
             Logger.getLogger(Control.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -174,28 +174,15 @@ END$$
 DELIMITER ;
 
 /*
-Trigger que crea y asigna el id a una cuenta cada que se crea
+Trigger que encripta contraseña del cliente
 */
 DELIMITER $$
 
-CREATE TRIGGER asignar_numero_cuenta
-BEFORE INSERT ON Cuenta
+CREATE TRIGGER encriptar_passw
+BEFORE INSERT ON Cliente
 FOR EACH ROW
 BEGIN
-#se declaran variables
-    DECLARE numero_cuenta VARCHAR(16);
-    DECLARE i INT DEFAULT 1;
-    DECLARE digito INT;
-    
-    #funciona como los de folio y pw solo que aqui estan dentro del trigger
-    SET numero_cuenta = '';
-    WHILE i <= 16 DO
-        SET digito = FLOOR(1 + RAND() * 9); #genera un numero aleatorio de 0 a 9
-        SET numero_cuenta = CONCAT(numero_cuenta, digito);
-        SET i = i + 1;
-    END WHILE;
-    
-    SET NEW.id_cuenta = numero_cuenta;
+    SET NEW.passw = SHA2(NEW.passw, 256);
 END$$
 
 DELIMITER ;
@@ -214,11 +201,13 @@ DELIMITER ;
 
 
 
--- ---------------------------------------------------------- TABLAS ------------------------------------------------------------------------------------
 
+-- ---------------------------------------------------------- TABLAS ------------------------------------------------------------------------------------
+CREATE DATABASE banco;
+USE BANCO;
 
 CREATE TABLE Cliente(
-	id INT PRIMARY KEY AUTO_INCREMENT,
+	id INT PRIMARY KEY NOT NULL,
 	nombre VARCHAR(50) NOT NULL,
 	apellido_paterno VARCHAR(50) NOT NULL,
 	apellido_materno VARCHAR(50) NOT NULL,
@@ -239,13 +228,13 @@ CREATE TABLE Cliente(
 */
 CREATE TABLE Cuenta(
 	id_cuenta VARCHAR(16) PRIMARY KEY NOT NULL,     -- numero de cuenta
-	fecha_apertura DATE NOT NULL,
+	fecha_apertura TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	saldo BIGINT,	
     id_cliente INT NOT NULL,
     FOREIGN KEY (id_cliente) REFERENCES Cliente(id)
 );
 
-insert into cuenta values(1,'2020-01-01', 100,1);
+
 
 /*
 	Una cuenta puede generar 1:N transacciones
@@ -294,4 +283,3 @@ estado boolean DEFAULT FALSE,
 -- tiempo TIMESTAMP,
 FOREIGN KEY  (id_transaccion) REFERENCES Transaccion(id_transaccion )
 );
-

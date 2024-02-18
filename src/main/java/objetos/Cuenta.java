@@ -26,6 +26,11 @@ public class Cuenta {
         this.cliente = cliente;
     }
 
+    public Cuenta(int saldo, Cliente cliente) {
+        this.saldo = saldo;
+        this.cliente = cliente;
+    }
+
    
 
     public Cuenta(Date fechaApertura, int saldo, Cliente cliente) {

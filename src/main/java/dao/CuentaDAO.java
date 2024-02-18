@@ -4,6 +4,7 @@
  */
 package dao;
 
+import control.Negocio;
 import dao.interfaces.IConexion;
 import dao.interfaces.ICuenta;
 import java.sql.CallableStatement;
@@ -52,29 +53,26 @@ public class CuentaDAO implements ICuenta {
     @Override
     public Cuenta registrarCuenta(Cuenta cuenta) {
         String creaCuenta = "INSERT INTO cuenta"
-                + "(saldo, id_cuenta)"
-                + "VALUES (?,?)";
+                + "(id_cuenta,saldo, id_cliente)"
+                + "VALUES (?,?,?)";
 
         Cuenta cuentaCreada = new Cuenta();
+        Negocio logNegocio = new Negocio();
 
         try {
+            logNegocio.generarNumCuenta(cuenta);
             Connection con = conexion.crearConexion();
-            PreparedStatement st = con.prepareStatement(creaCuenta, PreparedStatement.RETURN_GENERATED_KEYS);
-            st.setInt(1, cuenta.getSaldo());
-            st.setObject(2, cuenta.getCliente());
+            PreparedStatement st = con.prepareStatement(creaCuenta);
+            st.setString(1, cuenta.getIdCuenta());
+            st.setInt(2, cuenta.getSaldo());
+            st.setInt(3, cuenta.getCliente().getId());
 
             int filasAfectadas = st.executeUpdate();
 
             if (filasAfectadas > 0) {
-                ResultSet generatedKeys = st.getGeneratedKeys();
-
-                if (generatedKeys.next()) {
-                    String idGenerado = generatedKeys.getString(1);
-                    cuentaCreada.setIdCuenta(idGenerado);
-                } else {
-                    throw new SQLException("No se pudo obtener el ID generado.");
-                }
+                cuentaCreada.setIdCuenta(cuenta.getIdCuenta());
             }
+
         } catch (SQLException e) {
             Logger.getLogger(CuentaDAO.class.getName()).log(Level.SEVERE, "Error en la operacion", e);
 
@@ -147,19 +145,19 @@ public class CuentaDAO implements ICuenta {
     }
 
     @Override
-    public Cuenta buscarCuenta(int id) {
+    public Cuenta buscarCuenta(String id) {
         String selectCuenta
                 = "SELECT c.id_cuenta, c.fecha_apertura, c.saldo, cli.id "
                 + "FROM cuenta c "
                 + "JOIN cliente cli ON c.id_cliente = cli.id "
                 + "WHERE c.id_cuenta = ?";
-        Cuenta cuentaEncontrada = new Cuenta();
+        Cuenta cuentaEncontrada = null;
 
         try {
             Connection c = conexion.crearConexion();
             PreparedStatement selectStatement = c.prepareStatement(selectCuenta);
 
-            selectStatement.setInt(1, id);
+            selectStatement.setString(1, id);
 
             ResultSet resultSet = selectStatement.executeQuery();
 

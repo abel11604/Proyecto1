@@ -39,7 +39,7 @@ public class Cliente {
         this.edad = edad;
     }
 
-    public Cliente(String nombre, String apellido_paterno, String apellido_materno, String calle, String colonia, String codigo_postal, Date fecha_nacimiento, String passw, int edad) {
+    public Cliente(String nombre, String apellido_paterno, String apellido_materno, String calle, String colonia, String codigo_postal, Date fecha_nacimiento, String passw) {
         this.nombre = nombre;
         this.apellido_paterno = apellido_paterno;
         this.apellido_materno = apellido_materno;
@@ -48,7 +48,7 @@ public class Cliente {
         this.codigo_postal = codigo_postal;
         this.fecha_nacimiento = fecha_nacimiento;
         this.passw = passw;
-        this.edad = edad;
+        
     }
 
     
