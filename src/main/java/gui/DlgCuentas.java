@@ -224,7 +224,7 @@ public class DlgCuentas extends javax.swing.JDialog {
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setBackground(new java.awt.Color(204, 204, 204));
+        setBackground(new java.awt.Color(255, 255, 255));
         setMinimumSize(new java.awt.Dimension(1250, 700));
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -243,17 +243,17 @@ public class DlgCuentas extends javax.swing.JDialog {
             }
         });
         getContentPane().add(btnTransf);
-        btnTransf.setBounds(540, 220, 110, 41);
+        btnTransf.setBounds(50, 200, 110, 41);
 
         txtBienvenido.setFont(new java.awt.Font("Yu Gothic UI Semilight", 1, 31)); // NOI18N
         getContentPane().add(txtBienvenido);
-        txtBienvenido.setBounds(450, 20, 330, 32);
+        txtBienvenido.setBounds(230, 10, 330, 32);
 
         jLabel5.setFont(new java.awt.Font("Yu Gothic UI Semilight", 1, 31)); // NOI18N
         jLabel5.setText("¿Qué operación desea realizar?   ");
         //jLabel5.setLocation(625, 100);
         getContentPane().add(jLabel5);
-        jLabel5.setBounds(380, 70, 470, 42);
+        jLabel5.setBounds(160, 60, 470, 42);
 
         btnHistorial.setFont(new java.awt.Font("Yu Gothic UI Semilight", 0, 27)); // NOI18N
         btnHistorial.setText("Estado de Cuenta");
@@ -264,7 +264,7 @@ public class DlgCuentas extends javax.swing.JDialog {
             }
         });
         getContentPane().add(btnHistorial);
-        btnHistorial.setBounds(490, 340, 210, 37);
+        btnHistorial.setBounds(190, 200, 210, 37);
 
         btnFolio1.setFont(new java.awt.Font("Yu Gothic UI Semilight", 0, 27)); // NOI18N
         btnFolio1.setText("Generar Folio");
@@ -275,7 +275,7 @@ public class DlgCuentas extends javax.swing.JDialog {
             }
         });
         getContentPane().add(btnFolio1);
-        btnFolio1.setBounds(510, 470, 160, 37);
+        btnFolio1.setBounds(440, 200, 160, 37);
 
         pack();
         setLocationRelativeTo(null);

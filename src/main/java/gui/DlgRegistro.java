@@ -233,11 +233,11 @@ private Cliente cliente;
         String contrasena2 = jPasswordField2.getText();
         if (contrasena1.equals(contrasena2)) { //revisa que los dos campos tengan la misma contraseña
             cliente.setPassw(contrasena1); 
-            
+            dispose();
         } else {
             JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden", "Error", JOptionPane.ERROR_MESSAGE);
         }
-        dispose();
+        
         
 
 

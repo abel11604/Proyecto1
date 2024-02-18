@@ -157,6 +157,7 @@ public class ClienteDAO implements ICliente {
                 clienteEncontrado.setColonia(resultSet.getString("colonia"));
                 clienteEncontrado.setFecha_nacimiento(resultSet.getDate("fecha_nacimiento"));
                 clienteEncontrado.setCodigo_postal(resultSet.getString("codigo_postal"));
+                clienteEncontrado.setPassw(resultSet.getString("passw"));
             }
 
         } catch (SQLException e) {

@@ -4,6 +4,7 @@ C:\Users\abelc\OneDrive\Documentos\GitHub\Proyecto1\src\main\java\dao\excepcione
 C:\Users\abelc\OneDrive\Documentos\GitHub\Proyecto1\src\main\java\dao\ConexionDB.java
 C:\Users\abelc\OneDrive\Documentos\GitHub\Proyecto1\src\main\java\pruebas\main.java
 C:\Users\abelc\OneDrive\Documentos\GitHub\Proyecto1\src\main\java\dao\CuentaDAO.java
+C:\Users\abelc\OneDrive\Documentos\GitHub\Proyecto1\src\main\java\pruebas\NewMain1.java
 C:\Users\abelc\OneDrive\Documentos\GitHub\Proyecto1\src\main\java\control\Negocio.java
 C:\Users\abelc\OneDrive\Documentos\GitHub\Proyecto1\src\main\java\dao\interfaces\IConexion.java
 C:\Users\abelc\OneDrive\Documentos\GitHub\Proyecto1\src\main\java\gui\DlgRegistro.java
@@ -14,5 +15,7 @@ C:\Users\abelc\OneDrive\Documentos\GitHub\Proyecto1\src\main\java\objetos\Client
 C:\Users\abelc\OneDrive\Documentos\GitHub\Proyecto1\src\main\java\dao\interfaces\ICuenta.java
 C:\Users\abelc\OneDrive\Documentos\GitHub\Proyecto1\src\main\java\dao\interfaces\ICliente.java
 C:\Users\abelc\OneDrive\Documentos\GitHub\Proyecto1\src\main\java\dao\TransaccionDAO.java
+C:\Users\abelc\OneDrive\Documentos\GitHub\Proyecto1\src\main\java\gui\PanelConfirmaciones.java
 C:\Users\abelc\OneDrive\Documentos\GitHub\Proyecto1\src\main\java\dao\interfaces\ITransaccion.java
 C:\Users\abelc\OneDrive\Documentos\GitHub\Proyecto1\src\main\java\objetos\Cuenta.java
+C:\Users\abelc\OneDrive\Documentos\GitHub\Proyecto1\src\main\java\pruebas\NewMain.java

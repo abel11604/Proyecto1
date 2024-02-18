@@ -5,18 +5,22 @@
 package gui;
 
 import control.Control;
+import javax.swing.JOptionPane;
+import objetos.Cliente;
 
 /**
  *
  * @author fabri
  */
 public class FrameInicio extends javax.swing.JFrame {
-Control control;
+
+    Control control;
+
     /**
      * Creates new form InicioFrame
      */
     public FrameInicio() {
-        control=new Control();
+        control = new Control();
         initComponents();
     }
 
@@ -57,6 +61,11 @@ Control control;
 
         idClientetextField.setBackground(new java.awt.Color(176, 186, 195));
         idClientetextField.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        idClientetextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                idClientetextFieldActionPerformed(evt);
+            }
+        });
 
         contraseñaTextField.setBackground(new java.awt.Color(176, 186, 195));
 
@@ -66,6 +75,11 @@ Control control;
 
         inicioSesionBoton.setBackground(new java.awt.Color(249, 237, 50));
         inicioSesionBoton.setText("Iniciar sesion");
+        inicioSesionBoton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                inicioSesionBotonActionPerformed(evt);
+            }
+        });
 
         registrarseBoton.setForeground(new java.awt.Color(50, 94, 249));
         registrarseBoton.setText("Registrarse");
@@ -148,6 +162,35 @@ Control control;
     private void registrarseBotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registrarseBotonActionPerformed
         control.registrarCliente(this);
     }//GEN-LAST:event_registrarseBotonActionPerformed
+
+    private void inicioSesionBotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inicioSesionBotonActionPerformed
+        try {
+            int idCliente = Integer.parseInt(idClientetextField.getText());
+            String contraseña = contraseñaTextField.getText();
+
+            Cliente cliente = new Cliente();
+            cliente.setId(idCliente);
+            cliente.setPassw(contraseña);
+
+            cliente = control.iniciarSesion(cliente);
+
+            if (cliente != null) {
+                DlgCuentas dlg = new DlgCuentas(this, true, cliente);
+                dlg.setVisible(true);
+                dispose();
+            } else {
+                JOptionPane.showMessageDialog(null, "No se ha encontrado al cliente", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "El ID del cliente debe ser un número válido", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_inicioSesionBotonActionPerformed
+
+    private void idClientetextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idClientetextFieldActionPerformed
+        if (idClientetextField.getText().length() == 5) {
+
+        }
+    }//GEN-LAST:event_idClientetextFieldActionPerformed
 
     /**
      * @param args the command line arguments
