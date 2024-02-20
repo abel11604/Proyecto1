@@ -92,20 +92,21 @@ CREATE PROCEDURE verHistorial(IN id VARCHAR(16))
 BEGIN
 	SELECT
 		id_transaccion AS 'Id',
-        fecha_transaccion AS 'Fecha',
-        hora_transaccion AS 'Hora',
+        fecha_hora_transaccion AS 'Fecha y hora',
         cantidad AS 'Monto',
 			CASE 
 				# para que no se muestren 0 y 1, le damos formato usando WHEN
                 # tambien se pudo cambiar el atributo de la columna tipo_transaccion a un ENUM
                 # que guarde valores de 'folio' y 'cliente' pero es mas facil operar con true y false
-				WHEN tipo_transaccion = 0 THEN 'Folio'
-                WHEN tipo_transaccion = 1 THEN 'Cliente'
+				WHEN tipo_transaccion = 0 THEN 'Transferencia'
+                WHEN tipo_transaccion = 1 THEN 'Retiro'
 			END AS 'Tipo de Transacción'
 
     FROM
 		transaccion
-	WHERE id = transaccion.id_cuenta;
+	WHERE id = transaccion.id_cuenta
+     ORDER BY
+        fecha_hora_transaccion DESC;
 END$$
 DELIMITER ;
 
