@@ -167,7 +167,6 @@ public class CuentaDAO implements ICuenta {
                 cuentaEncontrada.setSaldo(resultSet.getInt("saldo"));
                 Cliente cliente = new Cliente();
                 cliente.setId(resultSet.getInt("id"));
-
                 cuentaEncontrada.setCliente(cliente);
 
             }

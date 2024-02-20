@@ -7,6 +7,7 @@ package gui;
 import control.Control;
 import javax.swing.JOptionPane;
 import objetos.Cliente;
+import objetos.Cuenta;
 
 /**
  *
@@ -64,6 +65,11 @@ public class FrameInicio extends javax.swing.JFrame {
         idClientetextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 idClientetextFieldActionPerformed(evt);
+            }
+        });
+        idClientetextField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                idClientetextFieldKeyTyped(evt);
             }
         });
 
@@ -167,7 +173,8 @@ public class FrameInicio extends javax.swing.JFrame {
         try {
             int idCliente = Integer.parseInt(idClientetextField.getText());
             String contraseña = contraseñaTextField.getText();
-
+            String passw = null;
+            Cuenta cuenta=new Cuenta();
             Cliente cliente = new Cliente();
             cliente.setId(idCliente);
             cliente.setPassw(contraseña);
@@ -175,9 +182,9 @@ public class FrameInicio extends javax.swing.JFrame {
             cliente = control.iniciarSesion(cliente);
 
             if (cliente != null) {
-                DlgCuentas dlg = new DlgCuentas(this, true, cliente);
-                dlg.setVisible(true);
-                dispose();
+                cuenta=control.seleccionarCuenta(cliente,this);
+                System.out.println(cuenta.getSaldo());
+                
             } else {
                 JOptionPane.showMessageDialog(null, "No se ha encontrado al cliente", "Error", JOptionPane.ERROR_MESSAGE);
             }
@@ -187,10 +194,14 @@ public class FrameInicio extends javax.swing.JFrame {
     }//GEN-LAST:event_inicioSesionBotonActionPerformed
 
     private void idClientetextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idClientetextFieldActionPerformed
-        if (idClientetextField.getText().length() == 5) {
-
-        }
+      
     }//GEN-LAST:event_idClientetextFieldActionPerformed
+
+    private void idClientetextFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_idClientetextFieldKeyTyped
+  if (idClientetextField.getText().length()==5) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_idClientetextFieldKeyTyped
 
     /**
      * @param args the command line arguments

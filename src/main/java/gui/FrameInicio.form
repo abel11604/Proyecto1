@@ -149,6 +149,7 @@
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="idClientetextFieldActionPerformed"/>
+            <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="idClientetextFieldKeyTyped"/>
           </Events>
         </Component>
         <Component class="javax.swing.JPasswordField" name="contrase&#xf1;aTextField">

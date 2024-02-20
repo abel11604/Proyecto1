@@ -11,13 +11,16 @@ import dao.TransaccionDAO;
 import dao.excepciones.PersistenciaException;
 import dao.interfaces.IConexion;
 import gui.DlgRegistro;
+import gui.DlgSeleccionarcuenta;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
 import objetos.Cliente;
 import objetos.Cuenta;
+
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import javax.swing.DefaultComboBoxModel;
 
 /**
  *
@@ -25,6 +28,7 @@ import java.security.NoSuchAlgorithmException;
  */
 public class Control {
 
+    Conversiones conversiones;
     private String cadenaConexion = "jdbc:mysql://localhost:3306/banco";
     private String user = "root";
     private String password = "root";
@@ -36,6 +40,7 @@ public class Control {
     public Control() {
         clienteDAO = new ClienteDAO(conexionDB);
         cuentaDAO = new CuentaDAO(conexionDB);
+        conversiones = new Conversiones();
     }
 
     public boolean registrarCliente(JFrame frame) {
@@ -61,7 +66,7 @@ public class Control {
      * @param cliente
      * @return objeto cliente con la contraseña encriptada
      */
-    public Cliente encriptarPassw(Cliente cliente) {
+    private Cliente encriptarPassw(Cliente cliente) {
         String contraseña = cliente.getPassw();
 
         try {
@@ -88,6 +93,31 @@ public class Control {
         }
     }
 
+    public String encriptarPassw(String passw) {
+        String contraseña = passw;
+
+        try {
+
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+
+            byte[] hashBytes = md.digest(contraseña.getBytes());
+
+            StringBuilder sb = new StringBuilder();
+            for (byte b : hashBytes) {
+                sb.append(String.format("%02x", b));
+            }
+
+            String hash = sb.toString();
+
+            return passw;
+
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+
+            return passw;
+        }
+    }
+
     public Cliente iniciarSesion(Cliente cliente) {
 
         Cliente clienteEncontrado = clienteDAO.buscarCliente(cliente.getId());
@@ -106,5 +136,24 @@ public class Control {
             return null;
         }
 
+    }
+
+    public Cuenta seleccionarCuenta(Cliente cliente, JFrame frame) {
+        Cuenta cuenta;
+        DefaultComboBoxModel<String> cuentasComboBoxModel;
+        DlgSeleccionarcuenta dlgCuenta;
+        String numCuenta = null;
+        cuentasComboBoxModel = conversiones.cuentasComboBoxModel(cuentaDAO.buscarCuentaPorCliente(cliente.getId()));
+        dlgCuenta = new DlgSeleccionarcuenta(frame, true, cliente, cuentasComboBoxModel, numCuenta);
+        cuenta = cuentaDAO.buscarCuenta(numCuenta);
+        
+        return cuenta;
+    }
+
+    public Cuenta agregarCuentaCliente(Cliente cliente) {
+        cliente = clienteDAO.buscarCliente(cliente.getId());
+        Cuenta cuenta = new Cuenta(1000, cliente);
+        cuentaDAO.registrarCuenta(cuenta);
+        return cuenta;
     }
 }

@@ -21,14 +21,16 @@ public class DlgCuentas extends javax.swing.JDialog {
     private final Cliente cliente;
     private final CuentaDAO cuentaDao;
     private final IConexion con;
-    private Cuenta cuentaSeleccionada;
-    private ArrayList<Cuenta> cuentas;
+    private final Cuenta cuenta;
+    
+    
 
-    public DlgCuentas(java.awt.Frame parent, boolean modal, Cliente cliente) {
+    public DlgCuentas(java.awt.Frame parent, boolean modal, Cliente cliente,Cuenta cuenta) {
         super(parent, modal);
         initComponents();
         con = new ConexionDB("jdbc:mysql://localhost:3306/banco", "root", "root");
         this.cliente = cliente;
+        this.cuenta=cuenta;
         cuentaDao = new CuentaDAO(con);
         //lista.setSelectionForeground(Color.red);
         model = new DefaultListModel();
@@ -61,11 +63,13 @@ public class DlgCuentas extends javax.swing.JDialog {
         jLabel7 = new javax.swing.JLabel();
         labelCantidad = new javax.swing.JTextField();
         labelDestino = new javax.swing.JTextField();
+        panelConfig = new javax.swing.JPanel();
         btnTransf = new javax.swing.JLabel();
         txtBienvenido = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         btnHistorial = new javax.swing.JLabel();
         btnFolio1 = new javax.swing.JLabel();
+        btnAjustes = new javax.swing.JLabel();
 
         panelSeleccionarCuenta.setVisible(false);
 
@@ -117,7 +121,7 @@ public class DlgCuentas extends javax.swing.JDialog {
                 .addGap(12, 12, 12)
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 292, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 289, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addGroup(panelSeleccionarCuentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
@@ -223,6 +227,17 @@ public class DlgCuentas extends javax.swing.JDialog {
                 .addGap(32, 32, 32))
         );
 
+        javax.swing.GroupLayout panelConfigLayout = new javax.swing.GroupLayout(panelConfig);
+        panelConfig.setLayout(panelConfigLayout);
+        panelConfigLayout.setHorizontalGroup(
+            panelConfigLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        panelConfigLayout.setVerticalGroup(
+            panelConfigLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
         setMinimumSize(new java.awt.Dimension(1250, 700));
@@ -277,13 +292,17 @@ public class DlgCuentas extends javax.swing.JDialog {
         getContentPane().add(btnFolio1);
         btnFolio1.setBounds(440, 200, 160, 37);
 
+        btnAjustes.setFont(new java.awt.Font("Yu Gothic UI", 0, 27)); // NOI18N
+        btnAjustes.setText("Ajustes");
+        getContentPane().add(btnAjustes);
+        btnAjustes.setBounds(650, 200, 130, 30);
+
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnTransfMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTransfMouseClicked
 
-        mostrarPanelSeleccionarCuenta();
     }//GEN-LAST:event_btnTransfMouseClicked
 
 
@@ -300,12 +319,7 @@ public class DlgCuentas extends javax.swing.JDialog {
     }//GEN-LAST:event_jLabel3MouseClicked
 
     private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
-        if (lista.getSelectedIndex() == -1) {
-            System.out.println("");
-            return;
-        }
-        cuentaSeleccionada = (Cuenta) model.getElementAt(lista.getSelectedIndex());
-        mostrarPanelTransferencias();
+      
     }//GEN-LAST:event_jLabel2MouseClicked
 
 
@@ -324,11 +338,11 @@ public class DlgCuentas extends javax.swing.JDialog {
         // long idDestino = Long.parseLong(labelDestino.getText());
         String idDestino = labelDestino.getText();
         int cantidad = Integer.parseInt(labelCantidad.getText());
-        if (cantidad > cuentaSeleccionada.getSaldo()) {
+        if (cantidad > cuenta.getSaldo()) {
             JOptionPane.showMessageDialog(this, "No tienes suficiente saldo, la operacion ha sido revertida");
         } else {
 
-            cuentaDao.transferencia(cuentaSeleccionada.getIdCuenta(), cantidad, idDestino);
+            cuentaDao.transferencia(cuenta.getIdCuenta(), cantidad, idDestino);
             JOptionPane.showMessageDialog(this, "Operacion Exitosa");
             mostrarDlgPrincipal();
         }
@@ -354,29 +368,15 @@ public class DlgCuentas extends javax.swing.JDialog {
 
     }
 
-    private void mostrarPanelSeleccionarCuenta() {
-
-        panelSeleccionarCuenta.setVisible(true);
-        btnTransf.setVisible(false);
-        btnHistorial.setVisible(false);
-        btnFolio1.setVisible(false);
-        panelSeleccionarCuenta.setVisible(true);
-        cuentas = cuentaDao.buscarCuentaPorCliente(cliente.getId());
-        model.removeAllElements();
-
-        for (int i = 0; i < cuentas.size(); i++) {
-            model.addElement(cuentas.get(i));
-
-        }
-    }
+   
 
     private void mostrarPanelTransferencias() {
-        panelSeleccionarCuenta.setVisible(false);
         panelTransf.setVisible(true);
-        txtSaldoActual.setText(String.valueOf(cuentaSeleccionada.getSaldo()));
+        txtSaldoActual.setText(String.valueOf(cuenta.getSaldo()));
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel btnAceptar;
+    private javax.swing.JLabel btnAjustes;
     private javax.swing.JLabel btnFolio1;
     private javax.swing.JLabel btnHistorial;
     private javax.swing.JLabel btnRegresar;
@@ -392,6 +392,7 @@ public class DlgCuentas extends javax.swing.JDialog {
     private javax.swing.JTextField labelCantidad;
     private javax.swing.JTextField labelDestino;
     private javax.swing.JList<String> lista;
+    private javax.swing.JPanel panelConfig;
     private javax.swing.JPanel panelSeleccionarCuenta;
     private javax.swing.JPanel panelTransf;
     private javax.swing.JLabel txtBienvenido;

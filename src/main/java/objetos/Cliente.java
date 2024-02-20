@@ -48,10 +48,13 @@ public class Cliente {
         this.codigo_postal = codigo_postal;
         this.fecha_nacimiento = fecha_nacimiento;
         this.passw = passw;
-        
+
     }
 
-    
+    public Cliente(int id) {
+        this.id = id;
+    }
+
     public int getId() {
         return id;
     }
@@ -136,8 +139,5 @@ public class Cliente {
     public String toString() {
         return "Cliente{" + "id=" + id + ", nombre=" + nombre + ", apellido_paterno=" + apellido_paterno + ", apellido_materno=" + apellido_materno + ", calle=" + calle + ", colonia=" + colonia + ", codigo_postal=" + codigo_postal + ", fecha_nacimiento=" + fecha_nacimiento + ", passw=" + passw + ", edad=" + edad + '}';
     }
-
-   
-
 
 }
