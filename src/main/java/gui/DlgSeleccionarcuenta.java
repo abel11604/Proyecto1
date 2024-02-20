@@ -5,6 +5,9 @@
 package gui;
 
 import control.Control;
+import dao.ConexionDB;
+import dao.CuentaDAO;
+import dao.interfaces.IConexion;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import objetos.Cliente;
@@ -16,10 +19,11 @@ import objetos.Cuenta;
  */
 public class DlgSeleccionarcuenta extends javax.swing.JDialog {
 
-    private Cliente cliente;
-    private DefaultComboBoxModel cuentas;
+    private final Cliente cliente;
+    private final DefaultComboBoxModel cuentas;
     private String numCuenta;
-    private Control control;
+    private final Control control;
+    private CuentaDAO dao;
 
     /**
      * Creates new form DlgSeleccionarcuenta
@@ -171,6 +175,12 @@ public class DlgSeleccionarcuenta extends javax.swing.JDialog {
 
     private void seleccionarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seleccionarBtnActionPerformed
         numCuenta = (String) cuentasComboBox.getSelectedItem();
+        IConexion conexionDB = new ConexionDB("jdbc:mysql://localhost:3306/banco", "root", "root");
+
+        dao = new CuentaDAO(conexionDB);
+        DlgCuentas dlgc = new DlgCuentas(null, true, cliente, dao.buscarCuenta(numCuenta), dao);
+        this.dispose();
+        dlgc.setVisible(true);
 
         dispose();
     }//GEN-LAST:event_seleccionarBtnActionPerformed

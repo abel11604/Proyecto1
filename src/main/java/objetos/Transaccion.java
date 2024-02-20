@@ -12,7 +12,7 @@ import java.sql.Timestamp;
  * @author fabri
  */
 public class Transaccion {
-
+    private String formatoTipoTransaccion;
     private int id_transaccion;
     private Timestamp fechahora_transaccion;
     private boolean tipo_transaccion;
@@ -27,15 +27,29 @@ public class Transaccion {
         this.cuenta = cuenta;
     }
 
+    public Transaccion(Timestamp fechahora_transaccion, String formatoTipoTransaccion, int cantidad) {
+        this.fechahora_transaccion = fechahora_transaccion;
+        this.formatoTipoTransaccion = formatoTipoTransaccion;
+        this.cantidad = cantidad;
+    }
+
     public Transaccion() {
     }
 
-    public Transaccion(Timestamp fechaHora_transaccion, boolean tipo_transaccion, int cantidad, Cuenta cuenta) {
+    public Transaccion(Timestamp fechahora_transaccion, boolean tipo_transaccion, int cantidad, Cuenta cuenta) {
        this.fechahora_transaccion=fechahora_transaccion;
         this.tipo_transaccion = tipo_transaccion;
         this.cantidad = cantidad;
         this.cuenta = cuenta;
     }
+
+    public Transaccion(boolean tipo_transaccion, int cantidad, Cuenta cuenta) {
+        this.tipo_transaccion = tipo_transaccion;
+        this.cantidad = cantidad;
+        this.cuenta = cuenta;
+    }
+
+
 
     public int getId_transaccion() {
         return id_transaccion;
@@ -79,10 +93,20 @@ public class Transaccion {
         this.cuenta = cuenta;
     }
 
+    public String getFormatoTipoTransaccion() {
+        return formatoTipoTransaccion;
+    }
+
+    public void setFormatoTipoTransaccion(String formatoTipoTransaccion) {
+        this.formatoTipoTransaccion = formatoTipoTransaccion;
+    }
+
     @Override
     public String toString() {
-        return "Transaccion{" + "id_transaccion=" + id_transaccion + ", fechahora_transaccion=" + fechahora_transaccion + ", tipo_transaccion=" + tipo_transaccion + ", cantidad=" + cantidad + ", cuenta=" + cuenta + '}';
+        return "\nTransaccion: " + formatoTipoTransaccion  + "\nFecha: " + fechahora_transaccion + "\nCantidad: " + cantidad + "\n";
     }
+
+   
 
    
     

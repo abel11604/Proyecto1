@@ -92,7 +92,11 @@ CREATE PROCEDURE verHistorial(IN id VARCHAR(16))
 BEGIN
 	SELECT
 		id_transaccion AS 'Id',
+<<<<<<< HEAD
+        fecha_hora_transaccion AS 'Fecha',
+=======
         fecha_hora_transaccion AS 'Fecha y hora',
+>>>>>>> 7a58e86f83cf85b8f1597121c3d0921368abb9da
         cantidad AS 'Monto',
 			CASE 
 				# para que no se muestren 0 y 1, le damos formato usando WHEN

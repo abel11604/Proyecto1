@@ -5,9 +5,6 @@
 package gui;
 
 import control.Control;
-import dao.excepciones.PersistenciaException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import objetos.Cliente;
 import objetos.Cuenta;
@@ -179,20 +176,17 @@ public class FrameInicio extends javax.swing.JFrame {
             idClientetextField.setText("");
             contraseñaTextField.setText("");
             String passw = null;
-            Cuenta cuenta=new Cuenta();
+            Cuenta cuenta;
             Cliente cliente = new Cliente();
             cliente.setId(idCliente);
             cliente.setPassw(contraseña);
-             
+
             cliente = control.iniciarSesion(cliente);
 
             if (cliente != null) {
-                
-                    cuenta=control.seleccionarCuenta(cliente,this);
-              DlgCuentas dlgCuenta=new DlgCuentas(this,true,cliente,cuenta); 
-              
-              dlgCuenta.setVisible(true);
-                
+                cuenta = control.seleccionarCuenta(cliente, this);
+               // dispose();
+
             } else {
                 JOptionPane.showMessageDialog(null, "No se ha encontrado al cliente", "Error", JOptionPane.ERROR_MESSAGE);
             }
@@ -202,11 +196,11 @@ public class FrameInicio extends javax.swing.JFrame {
     }//GEN-LAST:event_inicioSesionBotonActionPerformed
 
     private void idClientetextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idClientetextFieldActionPerformed
-      
+
     }//GEN-LAST:event_idClientetextFieldActionPerformed
 
     private void idClientetextFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_idClientetextFieldKeyTyped
-  if (idClientetextField.getText().length()==5) {
+        if (idClientetextField.getText().length() == 5) {
             evt.consume();
         }
     }//GEN-LAST:event_idClientetextFieldKeyTyped
