@@ -176,19 +176,22 @@ public class FrameInicio extends javax.swing.JFrame {
         try {
             int idCliente = Integer.parseInt(idClientetextField.getText());
             String contraseña = contraseñaTextField.getText();
+            idClientetextField.setText("");
+            contraseñaTextField.setText("");
             String passw = null;
             Cuenta cuenta=new Cuenta();
             Cliente cliente = new Cliente();
             cliente.setId(idCliente);
             cliente.setPassw(contraseña);
-
+             
             cliente = control.iniciarSesion(cliente);
 
             if (cliente != null) {
                 
                     cuenta=control.seleccionarCuenta(cliente,this);
+              DlgCuentas dlgCuenta=new DlgCuentas(this,true,cliente,cuenta); 
               
-                System.out.println(cuenta.getSaldo());
+              dlgCuenta.setVisible(true);
                 
             } else {
                 JOptionPane.showMessageDialog(null, "No se ha encontrado al cliente", "Error", JOptionPane.ERROR_MESSAGE);
