@@ -5,6 +5,9 @@
 package gui;
 
 import control.Control;
+import dao.excepciones.PersistenciaException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import objetos.Cliente;
 import objetos.Cuenta;
@@ -182,7 +185,9 @@ public class FrameInicio extends javax.swing.JFrame {
             cliente = control.iniciarSesion(cliente);
 
             if (cliente != null) {
-                cuenta=control.seleccionarCuenta(cliente,this);
+                
+                    cuenta=control.seleccionarCuenta(cliente,this);
+              
                 System.out.println(cuenta.getSaldo());
                 
             } else {

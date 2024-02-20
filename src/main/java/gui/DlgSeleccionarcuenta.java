@@ -15,19 +15,21 @@ import objetos.Cuenta;
  * @author abelc
  */
 public class DlgSeleccionarcuenta extends javax.swing.JDialog {
-private Cliente cliente;
-private DefaultComboBoxModel cuentas;
-private String numCuenta;
-private Control control;
+
+    private Cliente cliente;
+    private DefaultComboBoxModel cuentas;
+    private String numCuenta;
+    private Control control;
+
     /**
      * Creates new form DlgSeleccionarcuenta
      */
-    public DlgSeleccionarcuenta(java.awt.Frame parent, boolean modal,Cliente cliente,DefaultComboBoxModel cuentas,String numCuenta) {
+    public DlgSeleccionarcuenta(java.awt.Frame parent, boolean modal, Cliente cliente, DefaultComboBoxModel cuentas, String numCuenta) {
         super(parent, modal);
-        this.cliente=cliente;
-        this.cuentas=cuentas;
-        this.numCuenta=numCuenta;
-        control=new Control();
+        this.cliente = cliente;
+        this.cuentas = cuentas;
+        this.numCuenta = numCuenta;
+        control = new Control();
         initComponents();
         setVisible(true);
     }
@@ -168,28 +170,31 @@ private Control control;
     }// </editor-fold>//GEN-END:initComponents
 
     private void seleccionarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seleccionarBtnActionPerformed
-        numCuenta=(String) cuentasComboBox.getSelectedItem();
+        numCuenta = (String) cuentasComboBox.getSelectedItem();
+
         dispose();
     }//GEN-LAST:event_seleccionarBtnActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-  
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void crearCuentaLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_crearCuentaLabelMouseClicked
-String password = JOptionPane.showInputDialog(this, "Ingrese su contraseña:", "Confirmación de contraseña", JOptionPane.PLAIN_MESSAGE);
+        String password = JOptionPane.showInputDialog(this, "Ingrese su contraseña:", "Confirmación de contraseña", JOptionPane.PLAIN_MESSAGE);
 
-    control.encriptarPassw(password);
+        control.encriptarPassw(password);
 
-    if (password != null && password.equals(cliente.getPassw())) {
-        Cuenta nuevaCuenta;
-        nuevaCuenta=control.agregarCuentaCliente(cliente);
-        JOptionPane.showMessageDialog(this, "Contraseña correcta. se ha creado la tarjeta "+nuevaCuenta.getIdCuenta(), "Contraseña correcta", JOptionPane.INFORMATION_MESSAGE);
-    } else {
-        JOptionPane.showMessageDialog(this, "La contraseña ingresada no es válida. Inténtelo de nuevo.", "Contraseña incorrecta", JOptionPane.ERROR_MESSAGE);
-    }
+        if (password != null && password.equals(cliente.getPassw())) {
+            Cuenta nuevaCuenta;
+            nuevaCuenta = control.agregarCuentaCliente(cliente);
+            JOptionPane.showMessageDialog(this, "Contraseña correcta. se ha creado la tarjeta " + nuevaCuenta.getIdCuenta(), "Contraseña correcta", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(this, "La contraseña ingresada no es válida. Inténtelo de nuevo.", "Contraseña incorrecta", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_crearCuentaLabelMouseClicked
-
+    public String getNumCuenta() {
+        return numCuenta;
+    }
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         // TODO add your handling code here:
     }//GEN-LAST:event_formWindowOpened
