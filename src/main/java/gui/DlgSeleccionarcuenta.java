@@ -131,7 +131,7 @@ public class DlgSeleccionarcuenta extends javax.swing.JDialog {
         jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setText("Seleccione una de sus cuentas");
         getContentPane().add(jLabel1);
-        jLabel1.setBounds(80, 50, 159, 16);
+        jLabel1.setBounds(80, 50, 240, 16);
 
         seleccionarBtn.setBackground(new java.awt.Color(249, 237, 50));
         seleccionarBtn.setText("Seleccionar");

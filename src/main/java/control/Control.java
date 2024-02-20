@@ -47,7 +47,8 @@ public class Control {
         Cliente cliente = new Cliente();
         Cuenta cuenta = new Cuenta();
         DlgRegistro dlgRegistro;
-        dlgRegistro = new DlgRegistro(frame, true, cliente);
+        dlgRegistro = new DlgRegistro(frame, true, cliente,1);
+        System.out.println(cliente.getNombre());
         try {
             clienteDAO.registrarCliente(cliente);
             cuenta.setCliente(cliente);
@@ -58,7 +59,13 @@ public class Control {
         }
         return true;
     }
-
+public boolean actualizarCliente(Cliente cliente){
+        Cuenta cuenta = new Cuenta();
+        DlgRegistro dlgRegistro;
+        dlgRegistro = new DlgRegistro(null, true, cliente,2);
+        clienteDAO.editarCliente(cliente);
+        return true;
+}
     /**
      * Metodo que encripta la contraseña de un cliente con el mismo formato con
      * el que se guardan en la base de datos
