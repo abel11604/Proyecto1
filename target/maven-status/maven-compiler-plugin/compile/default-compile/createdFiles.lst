@@ -12,7 +12,6 @@ control\Conversiones.class
 gui\DlgCuentas$8.class
 objetos\Transaccion.class
 objetos\Cuenta.class
-pruebas\NewMain2.class
 dao\ClienteDAO.class
 gui\DlgRegistro$1.class
 objetos\Cliente.class
@@ -30,14 +29,11 @@ gui\FrameInicio.class
 gui\DlgSeleccionarcuenta$1.class
 gui\FrameInicio$3.class
 gui\DlgSeleccionarcuenta$5.class
-pruebas\NewMain3.class
 dao\interfaces\ICliente.class
 dao\CuentaDAO.class
 gui\DlgCuentas$2.class
 gui\FrameInicio$2.class
 gui\DlgSeleccionarcuenta.class
-pruebas\NewMain.class
-pruebas\NewMain1.class
 gui\DlgRegistro.class
 dao\interfaces\IConexion.class
 gui\DlgCuentas$7.class

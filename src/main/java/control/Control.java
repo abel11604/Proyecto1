@@ -145,6 +145,8 @@ public class Control {
         String numCuenta = null;
         cuentasComboBoxModel = conversiones.cuentasComboBoxModel(cuentaDAO.buscarCuentaPorCliente(cliente.getId()));
         dlgCuenta = new DlgSeleccionarcuenta(frame, true, cliente, cuentasComboBoxModel, numCuenta);
+        numCuenta=dlgCuenta.getNumCuenta();
+       
         cuenta = cuentaDAO.buscarCuenta(numCuenta);
         
         return cuenta;

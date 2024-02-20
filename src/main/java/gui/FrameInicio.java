@@ -173,8 +173,10 @@ public class FrameInicio extends javax.swing.JFrame {
         try {
             int idCliente = Integer.parseInt(idClientetextField.getText());
             String contraseña = contraseñaTextField.getText();
+            idClientetextField.setText("");
+            contraseñaTextField.setText("");
             String passw = null;
-            Cuenta cuenta=new Cuenta();
+            Cuenta cuenta;
             Cliente cliente = new Cliente();
             cliente.setId(idCliente);
             cliente.setPassw(contraseña);
@@ -182,9 +184,9 @@ public class FrameInicio extends javax.swing.JFrame {
             cliente = control.iniciarSesion(cliente);
 
             if (cliente != null) {
-                cuenta=control.seleccionarCuenta(cliente,this);
-               // System.out.println(cuenta.getSaldo());
-                
+                cuenta = control.seleccionarCuenta(cliente, this);
+               // dispose();
+
             } else {
                 JOptionPane.showMessageDialog(null, "No se ha encontrado al cliente", "Error", JOptionPane.ERROR_MESSAGE);
             }
@@ -194,11 +196,11 @@ public class FrameInicio extends javax.swing.JFrame {
     }//GEN-LAST:event_inicioSesionBotonActionPerformed
 
     private void idClientetextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idClientetextFieldActionPerformed
-      
+
     }//GEN-LAST:event_idClientetextFieldActionPerformed
 
     private void idClientetextFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_idClientetextFieldKeyTyped
-  if (idClientetextField.getText().length()==5) {
+        if (idClientetextField.getText().length() == 5) {
             evt.consume();
         }
     }//GEN-LAST:event_idClientetextFieldKeyTyped

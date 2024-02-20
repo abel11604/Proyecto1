@@ -5,7 +5,6 @@
 package gui;
 
 import control.Control;
-import dao.ClienteDAO;
 import dao.ConexionDB;
 import dao.CuentaDAO;
 import dao.interfaces.IConexion;
@@ -182,6 +181,8 @@ public class DlgSeleccionarcuenta extends javax.swing.JDialog {
         DlgCuentas dlgc = new DlgCuentas(null, true, cliente, dao.buscarCuenta(numCuenta), dao);
         this.dispose();
         dlgc.setVisible(true);
+
+        dispose();
     }//GEN-LAST:event_seleccionarBtnActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -201,7 +202,9 @@ public class DlgSeleccionarcuenta extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "La contraseña ingresada no es válida. Inténtelo de nuevo.", "Contraseña incorrecta", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_crearCuentaLabelMouseClicked
-
+    public String getNumCuenta() {
+        return numCuenta;
+    }
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         // TODO add your handling code here:
     }//GEN-LAST:event_formWindowOpened

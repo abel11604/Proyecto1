@@ -1,6 +1,5 @@
 C:\Users\fabri\OneDrive\Escritorio\BD\Proyecto1\src\main\java\dao\ConexionDB.java
 C:\Users\fabri\OneDrive\Escritorio\BD\Proyecto1\src\main\java\gui\DlgCuentas.java
-C:\Users\fabri\OneDrive\Escritorio\BD\Proyecto1\src\main\java\pruebas\NewMain2.java
 C:\Users\fabri\OneDrive\Escritorio\BD\Proyecto1\src\main\java\objetos\Cliente.java
 C:\Users\fabri\OneDrive\Escritorio\BD\Proyecto1\src\main\java\objetos\Transaccion.java
 C:\Users\fabri\OneDrive\Escritorio\BD\Proyecto1\src\main\java\control\Control.java
@@ -9,10 +8,7 @@ C:\Users\fabri\OneDrive\Escritorio\BD\Proyecto1\src\main\java\gui\FrameInicio.ja
 C:\Users\fabri\OneDrive\Escritorio\BD\Proyecto1\src\main\java\control\Conversiones.java
 C:\Users\fabri\OneDrive\Escritorio\BD\Proyecto1\src\main\java\objetos\Cuenta.java
 C:\Users\fabri\OneDrive\Escritorio\BD\Proyecto1\src\main\java\gui\DlgRegistro.java
-C:\Users\fabri\OneDrive\Escritorio\BD\Proyecto1\src\main\java\pruebas\NewMain3.java
-C:\Users\fabri\OneDrive\Escritorio\BD\Proyecto1\src\main\java\pruebas\NewMain.java
 C:\Users\fabri\OneDrive\Escritorio\BD\Proyecto1\src\main\java\dao\interfaces\ICuenta.java
-C:\Users\fabri\OneDrive\Escritorio\BD\Proyecto1\src\main\java\pruebas\NewMain1.java
 C:\Users\fabri\OneDrive\Escritorio\BD\Proyecto1\src\main\java\dao\excepciones\PersistenciaException.java
 C:\Users\fabri\OneDrive\Escritorio\BD\Proyecto1\src\main\java\dao\interfaces\ITransaccion.java
 C:\Users\fabri\OneDrive\Escritorio\BD\Proyecto1\src\main\java\dao\CuentaDAO.java
