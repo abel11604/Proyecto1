@@ -6,10 +6,14 @@ package dao;
 
 import dao.interfaces.IConexion;
 import dao.interfaces.ITransaccion;
+import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import objetos.Cuenta;
@@ -88,12 +92,12 @@ public class TransaccionDAO implements ITransaccion {
     @Override
     public Transaccion verTransaccion(int id) {
 
-       String selectTransaccion
-        = "SELECT t.id_transaccion, t.fecha_transaccion, t.hora_transaccion, "
-        + "t.cantidad, t.tipo_transaccion, c.id_cuenta "
-        + "FROM transaccion t "
-        + "JOIN cuenta c ON t.id_cuenta = c.id_cuenta "
-        + "WHERE t.id_transaccion = ?";
+        String selectTransaccion
+                = "SELECT t.id_transaccion, t.fecha_transaccion, t.hora_transaccion, "
+                + "t.cantidad, t.tipo_transaccion, c.id_cuenta "
+                + "FROM transaccion t "
+                + "JOIN cuenta c ON t.id_cuenta = c.id_cuenta "
+                + "WHERE t.id_transaccion = ?";
         Transaccion transaccionEncontrada = null;
 
         try {
@@ -122,6 +126,38 @@ public class TransaccionDAO implements ITransaccion {
 
         }
         return transaccionEncontrada;
+    }
+
+    public ArrayList<Transaccion> verHistorial(String id) {
+        ArrayList<Transaccion> transacciones = new ArrayList<>();
+        try {
+            Connection con = conexion.crearConexion();
+            String verHistorialState = "{CALL verHistorial(?)}";
+            CallableStatement callableStatement = con.prepareCall(verHistorialState);
+            callableStatement.setString(1, id);
+//            ResultSet resultSet = callableStatement.executeQuery();
+            boolean results = callableStatement.execute();
+
+            while (results) {
+                ResultSet resultSet = callableStatement.getResultSet();
+                while (resultSet.next()) {
+                   // int idTransaccion = resultSet.getInt("Id");
+                    Timestamp fechaTransaccion = resultSet.getTimestamp("Fecha");
+                    int monto = resultSet.getInt("Monto");
+                    String tipoTransaccion = resultSet.getString("Tipo de Transacción");
+                    Transaccion transaccion = new Transaccion(fechaTransaccion, tipoTransaccion, monto);
+                    transacciones.add(transaccion);
+
+                }
+                results = callableStatement.getMoreResults();
+
+            }
+
+        } catch (SQLException e) {
+            Logger.getLogger(CuentaDAO.class.getName()).log(Level.SEVERE, "No ha sido posible recuperar los datos", e);
+
+        }
+        return transacciones;
     }
 
 }

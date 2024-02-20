@@ -183,7 +183,7 @@ public class FrameInicio extends javax.swing.JFrame {
 
             if (cliente != null) {
                 cuenta=control.seleccionarCuenta(cliente,this);
-                System.out.println(cuenta.getSaldo());
+               // System.out.println(cuenta.getSaldo());
                 
             } else {
                 JOptionPane.showMessageDialog(null, "No se ha encontrado al cliente", "Error", JOptionPane.ERROR_MESSAGE);
